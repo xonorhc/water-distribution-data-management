@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DATABASENAME=${1:-'mywebshop'}
+DATABASENAME=${1:-'sistema_agua'}
 
 echo "Restoring data to database $DATABASENAME"
 
