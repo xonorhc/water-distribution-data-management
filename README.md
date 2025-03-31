@@ -1,98 +1,152 @@
-# Sewer Data Management (pt_BR)
+# Water Distribution Data Management (pt_BR)
 
-Modelo de dados geoespaciais para sistemas de esgotamento sanitario.
+Water distribution assets.
 
-### Fluxograma
+---
 
-Fluxo simplificado do esgoto, desde a ligacao na rede coletora ate o lancamento no efluente.
+Modelo de dados geoespaciais para sistemas de distribuicao de agua.
+
+### Fluxo da agua
+
+Exemplo de um fluxo simplificado da "agua", desde a captacao, passando por equipamentos de maioor relevancia, ate o cliente.
 
 ```mermaid
-flowchart TB
-    inicio((Cliente))
-    t1{{"Ligacao"}}
-    t2{{"Rede Coletora"}}
-    ps("Poco de Succao")
-    b1("Bomba")
-    t4{{"Linha Recalque"}}
-    ete("Estacao Tratamento")
-    t5{{"Emissario"}}
-    ps2("Poco de Succao")
-    b2("Bomba")
-    t6{{"Linha Recalque"}}
-    fim(("Corpo Receptor"))
-    pl("Ponto de Lancamento")
-
-    inicio --> t1
-    subgraph "Esgoto Domiciliar"
-        t1 --> t2
-        t2 --> ps
-        subgraph Estacao Elevatoria
-            ps --> b1
-        end
-        b1 --> t4
-        t4 --> t2
-        t2 --> ete
-        t4 --> ete
+flowchart LR
+    r1(["linha recalque"])
+    r2(["linha aducao"])
+    cap["ponto captacao"]
+    b1[bomba] 
+    res1[reservatorio]
+    eta[["estacao tratamento"]]
+    r3(["linha recalque"])
+    r4(["linha aducao"])
+    r5([distribuicao])
+    b2[bomba]
+    res2[reservatorio]
+    fim((cliente))
+    inicio1((superficial)) --> cap
+    inicio2((subterranea)) --> cap
+    subgraph agua_bruta
+        cap --> b1
+        b1 --> r1
+        r1 --> res1
+        res1 --> r2
+        r2 --> b1
+        cap --> r2
+        r2 --> eta
+        r1 --> eta
     end
-    subgraph "Esgoto Tratado"
-        ete --> t5
-        t5 --> ps2
-        subgraph "Estacao Elevatoria"
-            ps2 --> b2
-        end
-        b2 --> t6
-        t6 --> t5
-        t5 --> pl
-        t6 --> pl
+    eta --> r4
+    subgraph agua_tratada
+        r4 --> b2
+        b2 --> r3
+        r3 --> res2
+        r3 --> r5
+        res2 --> r4
+        r4 --> res2
+        res2 --> r5
+        r5 --> r6
+        r5 --> b2
+        r6([ramal]) --> hd[[hidrometro]]
     end
-    pl --> fim
+    hd --> fim
 ```
 
 ### Modelo de dados conceitual
 
-...
-
-### Modelo de dados lógico
-
-```sql
+```mermaid
 erDiagram
-	redes_esgoto }o--|| tipo_rede_esgoto : references
-	redes_esgoto }o--|| tipo_esgoto : references
-	redes_esgoto }o--|| tipo_material : references
-	redes_esgoto }o--|| tipo_situacao : references
-	estacoes_tratamento }o--|| tipo_nivel_tratamento_esgoto : references
-	estacoes_tratamento }o--|| tipo_situacao : references
-	estacoes_elevatorias }o--|| tipo_esgoto : references
+	redes_agua }o--|| tipo_rede_agua : references
+	redes_agua }o--|| tipo_agua : references
+	redes_agua }o--|| tipo_material : references
+	redes_agua }o--|| tipo_situacao : references
+	captacoes }o--|| setores_abastecimento : references
+	captacoes }o--|| tipo_captacao : references
+	captacoes }o--|| tipo_manancial : references
+	captacoes }o--|| tipo_situacao : references
+	conexoes }o--|| tipo_conexao : references
+	conexoes }o--|| tipo_material : references
+	descargas }o--|| tipo_lancamento : references
+	descargas }o--|| tipo_descarga : references
+	estacoes_elevatorias }o--|| tipo_agua : references
 	estacoes_elevatorias }o--|| tipo_situacao : references
 	bombas }o--|| estacoes_elevatorias : references
 	bombas }o--|| tipo_bomba : references
 	bombas }o--|| tipo_situacao : references
-	pocos_succao }o--|| estacoes_elevatorias : references
-	pocos_succao }o--|| tipo_forma : references
-	pocos_succao }o--|| tipo_material : references
-	lancamentos_efluente }o--|| tipo_lancamento : references
-	lancamentos_efluente }o--|| tipo_esgoto : references
-	lancamentos_efluente }o--|| tipo_manancial : references
+	estacoes_tratamento }o--|| tipo_situacao : references
+	hidrantes }o--|| tipo_hidrante : references
+	medidores_pressao }o--|| tipo_medidor_pressao : references
+	medidores_pressao }o--|| tipo_acesso : references
+	medidores_pressao }o--|| tipo_situacao : references
+	medidores_vazao }o--|| setores_medicao : references
+	medidores_vazao }o--|| tipo_agua : references
+	medidores_vazao }o--|| tipo_medidor_vazao : references
+	medidores_vazao }o--|| tipo_funcao : references
+	medidores_vazao }o--|| tipo_acesso : references
+	medidores_vazao }o--|| tipo_situacao : references
+	reservatorios }o--|| tipo_reservatorio : references
+	reservatorios }o--|| tipo_forma : references
+	reservatorios }o--|| tipo_material : references
+	reservatorios }o--|| tipo_situacao : references
+	tanques_compensacao }o--|| tipo_tanque : references
+	tanques_compensacao }o--|| tipo_situacao : references
 	valvulas }o--|| tipo_valvula : references
 	valvulas }o--|| tipo_funcao_valvula : references
 	valvulas }o--|| tipo_acionamento_valvula : references
-	valvulas }o--|| tipo_acesso_valvula : references
+	valvulas }o--|| tipo_acesso : references
 	valvulas }o--|| tipo_posicao_valvula : references
-	valvulas }o--|| tipo_situacao : references
-	unidades_inspecao }o--|| tipo_unidade_inspecao : references
-	unidades_inspecao }o--|| tipo_forma : references
-	unidades_inspecao }o--|| tipo_material : references
-	unidades_inspecao }o--|| tipo_forma : references
-	unidades_inspecao }o--|| tipo_material : references
+```
+
+### Modelo de dados lógico
+
+```mermaid
+erDiagram
+	redes_agua }o--|| tipo_rede_agua : references
+	redes_agua }o--|| tipo_agua : references
+	redes_agua }o--|| tipo_material : references
+	redes_agua }o--|| tipo_situacao : references
+	captacoes }o--|| setores_abastecimento : references
+	captacoes }o--|| tipo_captacao : references
+	captacoes }o--|| tipo_manancial : references
+	captacoes }o--|| tipo_situacao : references
 	conexoes }o--|| tipo_conexao : references
 	conexoes }o--|| tipo_material : references
+	descargas }o--|| tipo_lancamento : references
+	descargas }o--|| tipo_descarga : references
+	estacoes_elevatorias }o--|| tipo_agua : references
+	estacoes_elevatorias }o--|| tipo_situacao : references
+	bombas }o--|| estacoes_elevatorias : references
+	bombas }o--|| tipo_bomba : references
+	bombas }o--|| tipo_situacao : references
+	estacoes_tratamento }o--|| tipo_situacao : references
+	hidrantes }o--|| tipo_hidrante : references
+	medidores_pressao }o--|| tipo_medidor_pressao : references
+	medidores_pressao }o--|| tipo_acesso : references
+	medidores_pressao }o--|| tipo_situacao : references
+	medidores_vazao }o--|| setores_medicao : references
+	medidores_vazao }o--|| tipo_agua : references
+	medidores_vazao }o--|| tipo_medidor_vazao : references
+	medidores_vazao }o--|| tipo_funcao : references
+	medidores_vazao }o--|| tipo_acesso : references
+	medidores_vazao }o--|| tipo_situacao : references
+	reservatorios }o--|| tipo_reservatorio : references
+	reservatorios }o--|| tipo_forma : references
+	reservatorios }o--|| tipo_material : references
+	reservatorios }o--|| tipo_situacao : references
+	tanques_compensacao }o--|| tipo_tanque : references
+	tanques_compensacao }o--|| tipo_situacao : references
+	valvulas }o--|| tipo_valvula : references
+	valvulas }o--|| tipo_funcao_valvula : references
+	valvulas }o--|| tipo_acionamento_valvula : references
+	valvulas }o--|| tipo_acesso : references
+	valvulas }o--|| tipo_posicao_valvula : references
 
-	tipo_rede_esgoto {
+	tipo_rede_agua {
 		SMALLINT id
 		VARCHAR tipo
 	}
 
-	tipo_esgoto {
+	tipo_agua {
 		SMALLINT id
 		VARCHAR tipo
 	}
@@ -107,107 +161,9 @@ erDiagram
 		VARCHAR tipo
 	}
 
-	redes_esgoto {
-		SERIAL id
-		BLOB geom
-		SMALLINT tipo
-		SMALLINT esgoto
-		SMALLINT material
-		SMALLINT diametro
-		NUMERIC(6) cota_montante
-		NUMERIC(3) profundidade_montante
-		NUMERIC(6) cota_jusante
-		NUMERIC(3) profundidade_jusante
-		NUMERIC(7) declividade
-		SMALLINT situacao
-		VARCHAR(255) localizacao
-		VARCHAR(255) observacoes
-	}
-
-	setores_esgotamento {
-		SERIAL id
-		BLOB geom
-		VARCHAR(255) observacoes
-	}
-
-	tipo_nivel_tratamento_esgoto {
+	tipo_captacao {
 		SMALLINT id
-		VARCHAR tipo
-	}
-
-	tipo_tecnologia_tratamento_esgoto {
-		SMALLINT id
-		VARCHAR tipo
-	}
-
-	estacoes_tratamento {
-		SERIAL id
-		BLOB geom
-		VARCHAR(50) nome
-		SMALLINT nivel_tratamento
-		SMALLINT tecnologia
-		NUMERIC(6) vazao
-		SMALLINT situacao
-		VARCHAR(255) localizacao
-		VARCHAR(255) observacoes
-	}
-
-	estacoes_elevatorias {
-		SERIAL id
-		BLOB geom
-		VARCHAR(50) nome
-		SMALLINT esgoto
-		SMALLINT situacao
-		VARCHAR(255) localizacao
-		VARCHAR(255) observacoes
-	}
-
-	tipo_bomba {
-		SMALLINT id
-		VARCHAR tipo
-	}
-
-	bombas {
-		SERIAL id
-		BLOB geom
-		INTEGER id_estacao_elevatoria
-		SMALLINT tipo
-		SMALLINT diametro_entrada
-		SMALLINT diametro_saida
-		NUMERIC(6) vazao
-		NUMERIC(6) potencia
-		NUMERIC(4) pressao
-		SMALLINT situacao
-		VARCHAR(255) localizacao
-		VARCHAR(255) observacoes
-	}
-
-	tipo_forma {
-		SMALLINT id
-		VARCHAR tipo
-	}
-
-	pocos_succao {
-		SERIAL id
-		BLOB geom
-		SMALLINT id_estacao_elevatoria
-		NUMERIC(6) cota_nivel
-		NUMERIC(6) cota_fundo
-		NUMERIC(3) profundidade
-		SMALLINT diametro
-		INTEGER volume
-		NUMERIC(3) nivel_min
-		NUMERIC(3) nivel_max
-		SMALLINT forma_tampao
-		SMALLINT material_tampao
-		SMALLINT diametro_tampao
-		VARCHAR(255) localizacao
-		VARCHAR(255) observacoes
-	}
-
-	tipo_lancamento {
-		SMALLINT id
-		VARCHAR tipo
+		VARCHAR(255) tipo
 	}
 
 	tipo_manancial {
@@ -215,16 +171,69 @@ erDiagram
 		VARCHAR tipo
 	}
 
-	lancamentos_efluente {
-		SERIAL id
-		BLOB geom
-		SMALLINT tipo
-		SMALLINT local_lancamento
-		SMALLINT esgoto
-		SMALLINT tipo_corpo_receptor
-		VARCHAR nome_corpo_receptor
-		VARCHAR(255) localizacao
-		VARCHAR(255) observacoes
+	tipo_conexao {
+		SMALLINT id
+		VARCHAR tipo
+	}
+
+	tipo_lancamento {
+		SMALLINT id
+		VARCHAR tipo
+	}
+
+	tipo_descarga {
+		SMALLINT id
+		VARCHAR tipo
+	}
+
+	tipo_bomba {
+		SMALLINT id
+		VARCHAR tipo
+	}
+
+	tipo_nivel_tratamento_agua {
+		SMALLINT id
+		VARCHAR(255) tipo
+	}
+
+	tipo_hidrante {
+		SMALLINT id
+		VARCHAR(255) tipo
+	}
+
+	tipo_medidor_pressao {
+		SMALLINT id
+		VARCHAR(255) tipo
+	}
+
+	tipo_acesso {
+		SMALLINT id
+		VARCHAR tipo
+	}
+
+	tipo_medidor_vazao {
+		SMALLINT id
+		VARCHAR(255) tipo
+	}
+
+	tipo_funcao {
+		SMALLINT id
+		VARCHAR tipo
+	}
+
+	tipo_reservatorio {
+		SMALLINT id
+		VARCHAR(255) tipo
+	}
+
+	tipo_forma {
+		SMALLINT id
+		VARCHAR tipo
+	}
+
+	tipo_tanque {
+		SMALLINT id
+		VARCHAR(255) tipo
 	}
 
 	tipo_valvula {
@@ -242,61 +251,43 @@ erDiagram
 		VARCHAR tipo
 	}
 
-	tipo_acesso_valvula {
-		SMALLINT id
-		VARCHAR tipo
-	}
-
 	tipo_posicao_valvula {
 		SMALLINT id
 		VARCHAR tipo
 	}
 
-	valvulas {
+	redes_agua {
 		SERIAL id
 		BLOB geom
 		SMALLINT tipo
-		SMALLINT funcao
-		SMALLINT diametro
-		SMALLINT acionamento
-		SMALLINT acesso
+		SMALLINT agua
+		SMALLINT material
+		INTEGER diametro
 		NUMERIC(3) profundidade
-		SMALLINT posicao
-		NUMERIC(3) qtd_voltas_fechar
 		SMALLINT situacao
 		VARCHAR(255) localizacao
 		VARCHAR(255) observacoes
-		NUMERIC rotacao_simbolo
 	}
 
-	tipo_unidade_inspecao {
-		SMALLINT id
-		VARCHAR tipo
-	}
-
-	unidades_inspecao {
+	setores_abastecimento {
 		SERIAL id
 		BLOB geom
-		SMALLINT tipo
-		SMALLINT forma
-		SMALLINT material
-		SMALLINT diametro
-		NUMERIC(6) cota_nivel
-		NUMERIC(6) cota_fundo
-		NUMERIC(3) profundidade
-		SMALLINT forma_tampao
-		SMALLINT material_tampao
-		SMALLINT diametro_tampao
-		BOOLEAN extravasor
-		NUMERIC(6) cota_extravasor
-		NUMERIC(3) profundidade_extravasor
-		VARCHAR(255) localizacao
+		VARCHAR(50) nome
 		VARCHAR(255) observacoes
 	}
 
-	tipo_conexao {
-		SMALLINT id
-		VARCHAR tipo
+	captacoes {
+		SERIAL id
+		BLOB geom
+		INTEGER id_setor_abastecimento
+		VARCHAR(50) nome
+		SMALLINT tipo
+		NUMERIC(6) capacidade
+		SMALLINT tipo_manancial
+		VARCHAR nome_manancial
+		SMALLINT situacao
+		VARCHAR(255) localizacao
+		VARCHAR(255) observacoes
 	}
 
 	conexoes {
@@ -311,8 +302,140 @@ erDiagram
 		VARCHAR(255) observacoes
 		NUMERIC rotacao_simbolo
 	}
+
+	descargas {
+		SERIAL id
+		BLOB geom
+		SMALLINT tipo
+		SMALLINT descarga
+		VARCHAR(255) localizacao
+		VARCHAR(255) observacoes
+	}
+
+	estacoes_elevatorias {
+		SERIAL id
+		BLOB geom
+		VARCHAR(50) nome
+		SMALLINT agua
+		SMALLINT situacao
+		VARCHAR(255) localizacao
+		VARCHAR(255) observacoes
+	}
+
+	bombas {
+		SERIAL id
+		BLOB geom
+		INTEGER id_estacao_elevatoria
+		SMALLINT tipo
+		SMALLINT diametro_entrada
+		SMALLINT diametro_saida
+		NUMERIC(6) vazao
+		NUMERIC(6) potencia
+		NUMERIC(4) pressao
+		SMALLINT situacao
+		VARCHAR(255) localizacao
+		VARCHAR(255) observacoes
+	}
+
+	estacoes_tratamento {
+		SERIAL id
+		BLOB geom
+		VARCHAR(50) nome
+		NUMERIC(6) vazao
+		SMALLINT tratamento
+		SMALLINT situacao
+		VARCHAR(255) localizacao
+		VARCHAR(255) observacoes
+	}
+
+	hidrantes {
+		SERIAL id
+		BLOB geom
+		SMALLINT tipo
+		VARCHAR(255) fabricante
+		NUMERIC(4) vazao
+		VARCHAR(255) localizacao
+		VARCHAR(255) observacoes
+	}
+
+	medidores_pressao {
+		SERIAL id
+		BLOB geom
+		SMALLINT tipo
+		SMALLINT acesso
+		SMALLINT situacao
+		VARCHAR(255) localizacao
+		VARCHAR(255) observacoes
+	}
+
+	setores_medicao {
+		SERIAL id
+		BLOB geom
+		VARCHAR(50) nome
+		VARCHAR(255) observacoes
+	}
+
+	medidores_vazao {
+		SERIAL id
+		BLOB geom
+		INTEGER id_setor_medicao
+		SMALLINT agua
+		SMALLINT tipo
+		SMALLINT funcao
+		SMALLINT diametro
+		NUMERIC(3) profundidade
+		SMALLINT acesso
+		SMALLINT situacao
+		VARCHAR(255) localizacao
+		VARCHAR(255) observacoes
+		NUMERIC rotacao_simbolo
+	}
+
+	reservatorios {
+		SERIAL id
+		BLOB geom
+		VARCHAR(50) nome
+		SMALLINT tipo
+		INTEGER volume
+		SMALLINT diametro
+		NUMERIC(3) altura
+		NUMERIC(3) nivel_min
+		NUMERIC(3) nivel_max
+		NUMERIC(3) altura_base
+		SMALLINT forma
+		SMALLINT material
+		SMALLINT situacao
+		VARCHAR(255) localizacao
+		VARCHAR(255) observacoes
+	}
+
+	tanques_compensacao {
+		SERIAL id
+		BLOB geom
+		SMALLINT tipo
+		SMALLINT situacao
+		VARCHAR(255) localizacao
+		VARCHAR(255) observacoes
+	}
+
+	valvulas {
+		SERIAL id
+		BLOB geom
+		SMALLINT tipo
+		SMALLINT funcao
+		SMALLINT diametro
+		SMALLINT acionamento
+		SMALLINT acesso
+		NUMERIC(3) profundidade
+		SMALLINT posicao
+		NUMERIC(3) qtd_voltas_fechar
+		VARCHAR(255) localizacao
+		VARCHAR(255) observacoes
+		NUMERIC rotacao_simbolo
+	}
 ```
 
 ### Modelo de dados físico
 
-...
+```sql
+```
