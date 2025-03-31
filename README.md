@@ -4,11 +4,11 @@ Water distribution assets.
 
 ---
 
-#$ Modelo de dados para Sistemas de Distribuicao de Agua
-
 Modelo de dados geoespaciais para sistemas de distribuicao de agua.
 
-### Fluxograma
+### Fluxo da agua
+
+Exemplo de um fluxo simplificado da "agua", desde a captacao, passando por equipamentos de maioor relevancia, ate o cliente.
 
 ```mermaid
 flowchart LR
