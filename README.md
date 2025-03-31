@@ -263,7 +263,7 @@ erDiagram
 		SMALLINT agua
 		SMALLINT material
 		INTEGER diametro
-		NUMERIC(3,2) profundidade
+		NUMERIC(3) profundidade
 		SMALLINT situacao
 		VARCHAR(255) localizacao
 		VARCHAR(255) observacoes
@@ -282,7 +282,7 @@ erDiagram
 		INTEGER id_setor_abastecimento
 		VARCHAR(50) nome
 		SMALLINT tipo
-		NUMERIC(6,2) capacidade
+		NUMERIC(6) capacidade
 		SMALLINT tipo_manancial
 		VARCHAR nome_manancial
 		SMALLINT situacao
@@ -297,7 +297,7 @@ erDiagram
 		SMALLINT material
 		SMALLINT diametro_entrada
 		SMALLINT diametro_saida
-		NUMERIC(3,2) profundidade
+		NUMERIC(3) profundidade
 		VARCHAR(255) localizacao
 		VARCHAR(255) observacoes
 		NUMERIC rotacao_simbolo
@@ -329,9 +329,9 @@ erDiagram
 		SMALLINT tipo
 		SMALLINT diametro_entrada
 		SMALLINT diametro_saida
-		NUMERIC(6,2) vazao
-		NUMERIC(6,2) potencia
-		NUMERIC(4,1) pressao
+		NUMERIC(6) vazao
+		NUMERIC(6) potencia
+		NUMERIC(4) pressao
 		SMALLINT situacao
 		VARCHAR(255) localizacao
 		VARCHAR(255) observacoes
@@ -341,7 +341,7 @@ erDiagram
 		SERIAL id
 		BLOB geom
 		VARCHAR(50) nome
-		NUMERIC(6,2) vazao
+		NUMERIC(6) vazao
 		SMALLINT tratamento
 		SMALLINT situacao
 		VARCHAR(255) localizacao
@@ -353,7 +353,7 @@ erDiagram
 		BLOB geom
 		SMALLINT tipo
 		VARCHAR(255) fabricante
-		NUMERIC(4,1) vazao
+		NUMERIC(4) vazao
 		VARCHAR(255) localizacao
 		VARCHAR(255) observacoes
 	}
@@ -383,7 +383,7 @@ erDiagram
 		SMALLINT tipo
 		SMALLINT funcao
 		SMALLINT diametro
-		NUMERIC(3,2) profundidade
+		NUMERIC(3) profundidade
 		SMALLINT acesso
 		SMALLINT situacao
 		VARCHAR(255) localizacao
@@ -398,10 +398,10 @@ erDiagram
 		SMALLINT tipo
 		INTEGER volume
 		SMALLINT diametro
-		NUMERIC(3,2) altura
-		NUMERIC(3,2) nivel_min
-		NUMERIC(3,2) nivel_max
-		NUMERIC(3,2) altura_base
+		NUMERIC(3) altura
+		NUMERIC(3) nivel_min
+		NUMERIC(3) nivel_max
+		NUMERIC(3) altura_base
 		SMALLINT forma
 		SMALLINT material
 		SMALLINT situacao
@@ -426,9 +426,9 @@ erDiagram
 		SMALLINT diametro
 		SMALLINT acionamento
 		SMALLINT acesso
-		NUMERIC(3,2) profundidade
+		NUMERIC(3) profundidade
 		SMALLINT posicao
-		NUMERIC(3,1) qtd_voltas_fechar
+		NUMERIC(3) qtd_voltas_fechar
 		VARCHAR(255) localizacao
 		VARCHAR(255) observacoes
 		NUMERIC rotacao_simbolo
