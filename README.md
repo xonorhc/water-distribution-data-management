@@ -54,48 +54,7 @@ flowchart LR
 
 ### Modelo de dados conceitual
 
-```mermaid
-erDiagram
-	redes_agua }o--|| tipo_rede_agua : references
-	redes_agua }o--|| tipo_agua : references
-	redes_agua }o--|| tipo_material : references
-	redes_agua }o--|| tipo_situacao : references
-	captacoes }o--|| setores_abastecimento : references
-	captacoes }o--|| tipo_captacao : references
-	captacoes }o--|| tipo_manancial : references
-	captacoes }o--|| tipo_situacao : references
-	conexoes }o--|| tipo_conexao : references
-	conexoes }o--|| tipo_material : references
-	descargas }o--|| tipo_lancamento : references
-	descargas }o--|| tipo_descarga : references
-	estacoes_elevatorias }o--|| tipo_agua : references
-	estacoes_elevatorias }o--|| tipo_situacao : references
-	bombas }o--|| estacoes_elevatorias : references
-	bombas }o--|| tipo_bomba : references
-	bombas }o--|| tipo_situacao : references
-	estacoes_tratamento }o--|| tipo_situacao : references
-	hidrantes }o--|| tipo_hidrante : references
-	medidores_pressao }o--|| tipo_medidor_pressao : references
-	medidores_pressao }o--|| tipo_acesso : references
-	medidores_pressao }o--|| tipo_situacao : references
-	medidores_vazao }o--|| setores_medicao : references
-	medidores_vazao }o--|| tipo_agua : references
-	medidores_vazao }o--|| tipo_medidor_vazao : references
-	medidores_vazao }o--|| tipo_funcao : references
-	medidores_vazao }o--|| tipo_acesso : references
-	medidores_vazao }o--|| tipo_situacao : references
-	reservatorios }o--|| tipo_reservatorio : references
-	reservatorios }o--|| tipo_forma : references
-	reservatorios }o--|| tipo_material : references
-	reservatorios }o--|| tipo_situacao : references
-	tanques_compensacao }o--|| tipo_tanque : references
-	tanques_compensacao }o--|| tipo_situacao : references
-	valvulas }o--|| tipo_valvula : references
-	valvulas }o--|| tipo_funcao_valvula : references
-	valvulas }o--|| tipo_acionamento_valvula : references
-	valvulas }o--|| tipo_acesso : references
-	valvulas }o--|| tipo_posicao_valvula : references
-```
+...
 
 ### Modelo de dados lógico
 
@@ -437,5 +396,4 @@ erDiagram
 
 ### Modelo de dados físico
 
-```sql
-```
+...
