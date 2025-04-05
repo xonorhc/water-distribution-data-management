@@ -6,7 +6,7 @@ Water distribution assets.
 
 Modelo de dados geoespaciais para sistemas de distribuicao de agua.
 
-### Fluxo da agua
+### Fluxograma
 
 Exemplo de um fluxo simplificado da "agua", desde a captacao, passando por equipamentos de maioor relevancia, ate o cliente.
 
