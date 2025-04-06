@@ -6,6 +6,10 @@ Water distribution assets.
 
 Modelo de dados geoespaciais para sistemas de distribuicao de agua.
 
+[PostgreSQL](https://www.postgresql.org/) 
+
+[PostGIS](https://postgis.net/) 
+
 ### Fluxograma
 
 Exemplo de um fluxo simplificado da "agua", desde a captacao, passando por equipamentos de maioor relevancia, ate o cliente.
