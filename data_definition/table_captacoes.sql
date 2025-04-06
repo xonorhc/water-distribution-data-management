@@ -14,3 +14,21 @@ CREATE TABLE IF NOT EXISTS sistema_agua.captacoes (
 
 CREATE INDEX ON sistema_agua.captacoes USING gist (geom);
 
+ALTER TABLE sistema_agua.captacoes
+    ADD COLUMN data_criacao timestamp
+    ADD COLUMN usuario_criacao varchar(20);
+
+CREATE OR REPLACE TRIGGER trig_inserido_por
+    BEFORE INSERT ON sistema_agua.captacoes
+    FOR EACH ROW
+    EXECUTE FUNCTION sistema_agua.inserido_por ();
+
+ALTER TABLE sistema_agua.captacoes
+    ADD COLUMN data_atualizacao timestamp
+    ADD COLUMN usuario_atualizacao varchar(20);
+
+CREATE OR REPLACE TRIGGER trig_atualizado_por
+    BEFORE UPDATE ON sistema_agua.captacoes
+    FOR EACH ROW
+    EXECUTE FUNCTION sistema_agua.atualizado_por ();
+

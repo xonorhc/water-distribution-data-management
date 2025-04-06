@@ -1,9 +1,9 @@
-CREATE TABLE sistema_agua.tipo_nivel_tratamento_agua (
+CREATE TABLE sistema_agua.tipo_tratamento_nivel (
     id smallint PRIMARY KEY,
     tipo varchar(255) UNIQUE NOT NULL
 );
 
-INSERT INTO sistema_agua.tipo_nivel_tratamento_agua
+INSERT INTO sistema_agua.tipo_tratamento_nivel
     VALUES (1, 'Coagulacao'),
     (2, 'Floculacao'),
     (3, 'Decantacao'),
