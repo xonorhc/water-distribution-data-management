@@ -1,9 +1,9 @@
-CREATE TABLE tipo_medidor_vazao (
+CREATE TABLE sistema_agua.tipo_medidor_vazao (
     id smallint PRIMARY KEY,
     tipo varchar(255) UNIQUE NOT NULL
 );
 
-INSERT INTO tipo_medidor_vazao
+INSERT INTO sistema_agua.tipo_medidor_vazao
     VALUES (1, 'Eletromagnetico'),
     (2, 'Massica coriolis'),
     (3, 'Rotametro'),

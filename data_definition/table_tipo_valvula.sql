@@ -1,9 +1,9 @@
-CREATE TABLE tipo_valvula (
+CREATE TABLE sistema_agua.tipo_valvula (
     id smallint PRIMARY KEY,
     tipo varchar UNIQUE NOT NULL
 );
 
-INSERT INTO tipo_valvula
+INSERT INTO sistema_agua.tipo_valvula
     VALUES (1, 'Borboleta'),
     (2, 'Esferica'),
     (3, 'Gaveta'),

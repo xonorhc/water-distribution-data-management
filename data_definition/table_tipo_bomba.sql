@@ -1,9 +1,9 @@
-CREATE TABLE tipo_bomba (
+CREATE TABLE sistema_agua.tipo_bomba (
     id smallint PRIMARY KEY,
     tipo varchar UNIQUE NOT NULL
 );
 
-INSERT INTO tipo_bomba
+INSERT INTO sistema_agua.tipo_bomba
     VALUES (1, 'Centrifuga'),
     (2, 'Submersa'),
     (3, 'Submersivel'),

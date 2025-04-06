@@ -148,3 +148,4 @@ INSERT INTO tipo_posicao_valvula
     (2, 'Fechada'),
     (3, 'Nao aplicavel'),
     (4, 'Parcialmente aberta');
+

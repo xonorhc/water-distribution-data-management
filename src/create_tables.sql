@@ -1,8 +1,3 @@
-CREATE DATABASE modelo_dados_saneamento;
-
--- Schema: sistema_agua
-CREATE SCHEMA IF NOT EXISTS sistema_agua;
-
 CREATE TABLE tipo_rede_agua (
     id smallint PRIMARY KEY,
     tipo varchar UNIQUE NOT NULL
@@ -327,3 +322,4 @@ CREATE TABLE valvulas (
 );
 
 CREATE INDEX ON sistema_agua.valvulas USING gist (geom);
+

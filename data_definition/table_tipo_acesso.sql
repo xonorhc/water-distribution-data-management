@@ -1,9 +1,9 @@
-CREATE TABLE tipo_acesso (
+CREATE TABLE sistema_agua.tipo_acesso (
     id smallint PRIMARY KEY,
     tipo varchar UNIQUE NOT NULL
 );
 
-INSERT INTO tipo_acesso
+INSERT INTO sistema_agua.tipo_acesso
     VALUES (1, 'Caixa'),
     (2, 'Enterrado'),
     (3, 'Acesso livre'),

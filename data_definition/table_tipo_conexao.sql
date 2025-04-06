@@ -1,9 +1,9 @@
-CREATE TABLE tipo_conexao (
+CREATE TABLE sistema_agua.tipo_conexao (
     id smallint PRIMARY KEY,
     tipo varchar UNIQUE NOT NULL
 );
 
-INSERT INTO tipo_conexao
+INSERT INTO sistema_agua.tipo_conexao
     VALUES (1, 'Adaptador'),
     (2, 'CAP'),
     (3, 'Colar de tomada'),

@@ -1,9 +1,9 @@
-CREATE TABLE tipo_material (
+CREATE TABLE sistema_agua.tipo_material (
     id smallint PRIMARY KEY,
     tipo varchar UNIQUE NOT NULL
 );
 
-INSERT INTO tipo_material
+INSERT INTO sistema_agua.tipo_material
     VALUES (1, 'CA'),
     (2, 'FoFo'),
     (3, 'FGal'),

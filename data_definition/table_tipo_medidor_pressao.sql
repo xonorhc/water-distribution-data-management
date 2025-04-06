@@ -1,9 +1,9 @@
-CREATE TABLE tipo_medidor_pressao (
+CREATE TABLE sistema_agua.tipo_medidor_pressao (
     id smallint PRIMARY KEY,
     tipo varchar(255) UNIQUE NOT NULL
 );
 
-INSERT INTO tipo_medidor_pressao
+INSERT INTO sistema_agua.tipo_medidor_pressao
     VALUES (1, 'Bourbon'),
     (2, 'Diafragma'),
     (3, 'Tubo U'),
