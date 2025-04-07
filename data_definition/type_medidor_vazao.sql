@@ -1,9 +1,9 @@
-CREATE TABLE sistema_agua.tipo_medidor_vazao (
+CREATE TABLE :PGSCHEMA.tipo_medidor_vazao (
     id smallint PRIMARY KEY,
     tipo varchar(255) UNIQUE NOT NULL
 );
 
-INSERT INTO sistema_agua.tipo_medidor_vazao
+INSERT INTO :PGSCHEMA.tipo_medidor_vazao
     VALUES (1, 'Eletromagnetico'),
     (2, 'Massica coriolis'),
     (3, 'Rotametro'),
