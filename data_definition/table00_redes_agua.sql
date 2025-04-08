@@ -14,21 +14,3 @@ CREATE TABLE IF NOT EXISTS :PGSCHEMA.redes_agua (
 
 CREATE INDEX ON :PGSCHEMA.redes_agua USING gist (geom);
 
-ALTER TABLE :PGSCHEMA.redes_agua
-    ADD COLUMN data_criacao timestamp,
-    ADD COLUMN usuario_criacao varchar(20);
-
-CREATE OR REPLACE TRIGGER trig_inserido_por
-    BEFORE INSERT ON :PGSCHEMA.redes_agua
-    FOR EACH ROW
-    EXECUTE FUNCTION :PGSCHEMA.inserido_por ();
-
-ALTER TABLE :PGSCHEMA.redes_agua
-    ADD COLUMN data_atualizacao timestamp,
-    ADD COLUMN usuario_atualizacao varchar(20);
-
-CREATE OR REPLACE TRIGGER trig_atualizado_por
-    BEFORE UPDATE ON :PGSCHEMA.redes_agua
-    FOR EACH ROW
-    EXECUTE FUNCTION :PGSCHEMA.atualizado_por ();
-
