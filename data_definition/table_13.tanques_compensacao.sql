@@ -1,6 +1,6 @@
-CREATE TABLE :PGSCHEMA.tanques_compensacao (
+CREATE TABLE IF NOT EXISTS :PGSCHEMA.tanques_compensacao (
     id serial PRIMARY KEY,
-    geom GEOMETRY(point, 4674) UNIQUE NOT NULL,
+    geom GEOMETRY(point, :SRID) UNIQUE NOT NULL,
     tipo smallint REFERENCES :PGSCHEMA.tipo_tanque (id) NOT NULL,
     situacao smallint REFERENCES :PGSCHEMA.tipo_situacao (id) NOT NULL,
     localizacao varchar(255),

@@ -1,7 +1,7 @@
-CREATE TABLE :PGSCHEMA.medidores_vazao (
+CREATE TABLE IF NOT EXISTS :PGSCHEMA.medidores_vazao (
     id serial PRIMARY KEY,
-    geom GEOMETRY(point, 4674) UNIQUE NOT NULL,
-    id_setor_medicao int REFERENCES :PGSCHEMA.setores_medicao (id),
+    geom GEOMETRY(point, :SRID) UNIQUE NOT NULL,
+    id_setor_medicao int REFERENCES :PGSCHEMA.setores_medicao (id), -- TODO: Create trigger function to update
     agua smallint REFERENCES :PGSCHEMA.tipo_agua (id) NOT NULL,
     tipo smallint REFERENCES :PGSCHEMA.tipo_medidor_vazao (id) NOT NULL,
     funcao smallint REFERENCES :PGSCHEMA.tipo_funcao (id) NOT NULL,

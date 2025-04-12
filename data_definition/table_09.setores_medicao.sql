@@ -1,7 +1,6 @@
-CREATE TABLE :PGSCHEMA.setores_medicao (
+CREATE TABLE IF NOT EXISTS :PGSCHEMA.setores_medicao (
     id serial PRIMARY KEY,
-    geom geometry(polygon, 4674) NOT NULL,
-    nome varchar(50) UNIQUE NOT NULL,
+    geom geometry(polygon, :SRID) NOT NULL,
     observacoes varchar(255)
 );
 

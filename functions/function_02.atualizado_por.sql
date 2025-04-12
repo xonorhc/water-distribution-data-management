@@ -27,12 +27,13 @@ BEGIN
         table_schema = _v1
         AND table_name NOT LIKE ('tipo_%')
             LOOP
-                EXECUTE format(' ALTER TABLE %2$I.%1$I ADD COLUMN data_atualizacao timestamp, ADD COLUMN usuario_atualizacao varchar(20) ', mytables.table_name, mytables.table_schema);
-                EXECUTE format(' CREATE OR REPLACE TRIGGER trig_atualizado_por BEFORE UPDATE ON %2$I.%1$I FOR EACH ROW EXECUTE FUNCTION %2$I.atualizado_por (); ', mytables.table_name, mytables.table_schema);
+                EXECUTE format('ALTER TABLE %2$I.%1$I ADD COLUMN data_atualizacao timestamp, ADD COLUMN usuario_atualizacao varchar(20);', mytables.table_name, mytables.table_schema);
+                EXECUTE format('CREATE OR REPLACE TRIGGER trig_atualizado_por BEFORE UPDATE ON %2$I.%1$I FOR EACH ROW EXECUTE FUNCTION %2$I.atualizado_por ();', mytables.table_name, mytables.table_schema);
             END LOOP;
 END
 $func$
 LANGUAGE plpgsql;
 
-SELECT pg_temp.foo (:'PGSCHEMA');
+SELECT
+    pg_temp.foo (:'PGSCHEMA');
 

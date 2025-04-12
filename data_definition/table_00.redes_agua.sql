@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS :PGSCHEMA.redes_agua (
     id serial PRIMARY KEY,
-    geom geometry(linestring, 4674) NOT NULL,
+    geom geometry(linestring, :SRID) NOT NULL,
     tipo smallint REFERENCES :PGSCHEMA.tipo_rede_agua (id) NOT NULL,
     agua smallint REFERENCES :PGSCHEMA.tipo_agua (id) NOT NULL,
     material smallint REFERENCES :PGSCHEMA.tipo_material (id) NOT NULL,

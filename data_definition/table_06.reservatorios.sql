@@ -1,6 +1,6 @@
-CREATE TABLE :PGSCHEMA.reservatorios (
+CREATE TABLE IF NOT EXISTS :PGSCHEMA.reservatorios (
     id serial PRIMARY KEY,
-    geom GEOMETRY(point, 4674) UNIQUE NOT NULL,
+    geom GEOMETRY(point, :SRID) UNIQUE NOT NULL,
     nome varchar(50) UNIQUE NOT NULL,
     tipo smallint REFERENCES :PGSCHEMA.tipo_reservatorio (id) NOT NULL,
     volume int CHECK (volume BETWEEN 0 AND 5000),

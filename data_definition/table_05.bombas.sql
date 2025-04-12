@@ -1,6 +1,6 @@
-CREATE TABLE :PGSCHEMA.bombas (
+CREATE TABLE IF NOT EXISTS :PGSCHEMA.bombas (
     id serial PRIMARY KEY,
-    geom GEOMETRY(point, 4674) UNIQUE NOT NULL,
+    geom GEOMETRY(point, :SRID) UNIQUE NOT NULL,
     id_estacao_elevatoria integer REFERENCES :PGSCHEMA.estacoes_elevatorias (id), -- HACK: Create trigger functio to update
     tipo smallint REFERENCES :PGSCHEMA.tipo_bomba (id),
     diametro_entrada smallint CHECK (diametro_entrada BETWEEN 0 AND 1000),
