@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS :PGSCHEMA.setores_abastecimento (
     id serial PRIMARY KEY,
-    geom GEOMETRY(polygon, :SRID) NOT NULL, -- TODO: Create a function to generate geometries of areas around networks
+    geom GEOMETRY(polygon, :SRID) NOT NULL, -- TODO: Create a function to generate geometries from buffer around networks.
     observacoes varchar(255)
 );
 

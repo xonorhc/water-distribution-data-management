@@ -1,13 +1,13 @@
 CREATE TABLE IF NOT EXISTS :PGSCHEMA.medidores_vazao (
     id serial PRIMARY KEY,
     geom GEOMETRY(point, :SRID) UNIQUE NOT NULL,
-    id_setor_medicao int REFERENCES :PGSCHEMA.setores_medicao (id), -- TODO: Create trigger function to update
-    agua smallint REFERENCES :PGSCHEMA.tipo_agua (id) NOT NULL,
-    tipo smallint REFERENCES :PGSCHEMA.tipo_medidor_vazao (id) NOT NULL,
-    funcao smallint REFERENCES :PGSCHEMA.tipo_funcao (id) NOT NULL,
-    diametro smallint CHECK (diametro BETWEEN 0 AND 1000),
-    profundidade numeric(3, 2) CHECK (profundidade BETWEEN 0 AND 9),
-    acesso smallint REFERENCES :PGSCHEMA.tipo_acesso (id),
+    id_setor_medicao integer REFERENCES :PGSCHEMA.setores_medicao (id) ON UPDATE CASCADE ON DELETE SET NULL, -- TODO: Create trigger function to update
+    agua smallint REFERENCES :PGSCHEMA.tipo_agua (id) NOT NULL, -- TODO: Auto-update when before/after estacoes_tratamento.
+    tipo smallint REFERENCES :PGSCHEMA.tipo_medidor_vazao (id) NOT NULL, -- TODO: Criar uma tabela para caracteristicas do equipamento.
+    funcao smallint REFERENCES :PGSCHEMA.tipo_funcao (id) ON UPDATE CASCADE ON DELETE SET NULL,
+    diametro smallint CHECK (diametro BETWEEN 15 AND 1500) NOT NULL, -- NOTE: diametro nominal (dn) em milimetros (mm)
+    profundidade numeric(3, 2) CHECK (profundidade BETWEEN 0 AND 10), -- NOTE: metros (m)
+    acesso smallint REFERENCES :PGSCHEMA.tipo_acesso (id) ON UPDATE CASCADE ON DELETE SET NULL,
     situacao smallint REFERENCES :PGSCHEMA.tipo_situacao (id) NOT NULL,
     localizacao varchar(255),
     observacoes varchar(255),
