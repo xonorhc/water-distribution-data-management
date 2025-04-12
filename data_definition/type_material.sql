@@ -5,10 +5,15 @@ CREATE TABLE :PGSCHEMA.tipo_material (
 
 INSERT INTO :PGSCHEMA.tipo_material
     VALUES (1, 'CA'),
-    (2, 'FoFo'),
-    (3, 'FGal'),
+    (2, 'Concreto'),
+    (3, 'FoFo'),
+    (4, 'FGal'),
     (5, 'PRFV'),
     (6, 'PVC'),
-    (7, 'PVC DeFoFo'),
-    (8, 'PEAD');
+    (7, 'PVC Corrugado'),
+    (8, 'PVC DeFoFo'),
+    (9, 'PEAD'),
+    (10, 'PEAD Corrugado'),
+    (11, 'Aco'),
+    (12, 'Tijolo');
 
