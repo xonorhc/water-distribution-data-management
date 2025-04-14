@@ -6,7 +6,6 @@ CREATE TABLE IF NOT EXISTS :PGSCHEMA.conexoes (
     diametro_entrada smallint CHECK (diametro_entrada BETWEEN 15 AND 1500) NOT NULL, -- NOTE: diametro nominal (dn) em milimetros (mm).
     diametro_saida smallint CHECK (diametro_saida BETWEEN 15 AND 1500) NOT NULL, -- NOTE: diametro nominal (dn) em milimetros (mm).
     profundidade numeric(3, 2) CHECK (profundidade BETWEEN 0 AND 10), -- NOTE: metros (m)
-    situacao smallint REFERENCES :PGSCHEMA.tipo_situacao (id) NOT NULL,
     localizacao varchar(255),
     observacoes varchar(255),
     rotacao_simbolo numeric -- NOTE: Rotacao da simbologia para uso no QGIS.

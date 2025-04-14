@@ -9,7 +9,6 @@ SELECT
     c.diametro_entrada,
     c.diametro_saida,
     c.profundidade,
-    ts.tipo AS situacao,
     c.localizacao,
     c.observacoes,
     c.rotacao_simbolo
@@ -17,7 +16,6 @@ FROM
     conexoes c
     LEFT JOIN tipo_conexao tc ON c.tipo = tc.id
     LEFT JOIN tipo_material tm ON c.material = tm.id
-    LEFT JOIN tipo_situacao ts ON ts.id = c.situacao
 WHERE
     st_intersects (c.geom, (
             SELECT
