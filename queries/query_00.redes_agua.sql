@@ -21,3 +21,4 @@ FROM
 WHERE
     ra.situacao = 1
     AND ra.geom IS NOT NULL;
+
