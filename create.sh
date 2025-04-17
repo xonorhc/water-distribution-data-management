@@ -1,4 +1,4 @@
-#!/usr/bin/env bash -xv
+#!/bin/bash -xv
 
 PGHOST=localhost
 PGPORT=5432
