@@ -1,43 +1,29 @@
-#!/bin/bash -xv
+#!/usr/bin/env bash
 
-PGHOST=localhost
-PGPORT=5432
-PGUSER=postgres
-PGDATABASE=modelo_dados_saneamento
-PGSCHEMA=sistema_agua
-SRID=4674
+SCRIPTPATH="$(dirname "$0")"
+source "$SCRIPTPATH"/variables.env
 
-# create database
 psql -U $PGUSER -h $PGHOST -p $PGPORT -d 'postgres' \
   -c "create database $PGDATABASE;"
 
-# create extension
 psql -U $PGUSER -h $PGHOST -p $PGPORT -d $PGDATABASE \
   -c "create extension if not exists postgis;"
 
-# create schema
 psql -U $PGUSER -h $PGHOST -p $PGPORT -d $PGDATABASE \
   -c "create schema if not exists $PGSCHEMA;"
 
-# find $(dirname $0)/data_definition -name "*.sql" -exec echo {} \;
-# create table types
-find $(dirname "$0")/data_definition -type f -name "type_*" -exec \
-  psql -U $PGUSER -h $PGHOST -p $PGPORT -d $PGDATABASE -b --variable=PGSCHEMA=$PGSCHEMA \
-  -f {} \;
+Directories=(
+  'data_types'
+  'data_definition'
+  'functions'
+  'rule_system'
+)
 
-# create tables
-find $(dirname "$0")/data_definition -type f -name "table_*" -print0 | sort -z | xargs -0 -I{} \
-  psql -U $PGUSER -h $PGHOST -p $PGPORT -d $PGDATABASE -b --variable=PGSCHEMA=$PGSCHEMA \
-  --variable=SRID=$SRID \
-  -f "{}"
-
-# create functions
-find $(dirname "$0")/functions -type f -name "function_*" -exec \
-  psql -U $PGUSER -h $PGHOST -p $PGPORT -d $PGDATABASE -b --variable=PGSCHEMA=$PGSCHEMA \
-  -f {} \;
-
-# create materialized views
-find $(dirname "$0")/rule_system -type f -name "mview_*" -print0 | sort -z | xargs -0 -I{} \
-  psql -U $PGUSER -h $PGHOST -p $PGPORT -d $PGDATABASE -b --variable=PGSCHEMA=$PGSCHEMA \
-  --variable=MVSCHEMA='public' \
-  -f "{}"
+for i in ${Directories[@]}; do
+  find "$SCRIPTPATH"/$i -type f -name "*.sql" -print0 | sort -z | xargs -0 -I{} \
+    psql -U $PGUSER -h $PGHOST -p $PGPORT -d $PGDATABASE -b \
+    --variable=PGSCHEMA=$PGSCHEMA \
+    --variable=SRID=$SRID \
+    --variable=MVSCHEMA='public' \
+    -f "{}"
+done
