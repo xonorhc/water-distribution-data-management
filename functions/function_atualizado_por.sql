@@ -34,6 +34,4 @@ END
 $func$
 LANGUAGE plpgsql;
 
-SELECT
-    pg_temp.foo (:'PGSCHEMA');
-
+SELECT pg_temp.foo (:'PGSCHEMA');

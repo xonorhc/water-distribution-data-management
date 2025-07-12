@@ -1,6 +1,6 @@
 ### Fluxograma
 
-Exemplo de um fluxo simplificado da "agua", desde a captacao, passando por equipamentos de maioor relevancia, ate o cliente.
+Exemplo de um fluxo simplificado da "agua", desde a captacao, passando por equipamentos de maior relevancia, ate o cliente.
 
 ```mermaid
 flowchart LR
