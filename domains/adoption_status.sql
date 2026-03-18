@@ -1,10 +1,10 @@
 CREATE TABLE IF NOT EXISTS adoption_status (
-    code smallserial,
+    code smallserial PRIMARY KEY,
     description varchar(64) NOT NULL,
     details varchar(255)
 );
 
 INSERT INTO adoption_status (description)
 VALUES
-    ("Available"),
-    ("Adopted");
+    ('Available'),
+    ('Adopted');
