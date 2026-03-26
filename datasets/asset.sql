@@ -1,5 +1,7 @@
-CREATE TABLE IF NOT EXISTS assets (
-    global_id serial PRIMARY KEY, -- Globally unique identifier fo the feature
+CREATE SEQUENCE IF NOT EXISTS asset_global_id_seq AS bigint;
+
+CREATE TABLE IF NOT EXISTS asset (
+    global_id bigint NOT NULL DEFAULT nextval("asset_global_id_seq"), -- Globally unique identifier fo the feature
     lifecycle_status smallint REFERENCES lifecycle (id) NOT NULL DEFAULT 8, -- Current stage or condition of the asset in its lifecycle
     install_date date, -- Date when the asset was installed
     inservice_date date, -- Date when the asset was put into active service
@@ -15,6 +17,9 @@ CREATE TABLE IF NOT EXISTS assets (
     created_user varchar(255), -- User who created the feature
     created_date timestamp, -- Date and time when the feature was created
     last_edited_user varchar(255), -- Tracks the user who last edited the record
-    last_edited_date timestamp -- Date and time of the most recent modification to the record
+    last_edited_date timestamp, -- Date and time of the most recent modification to the record
+    PRIMARY KEY (global_id)
 );
+
+ALTER SEQUENCE asset_global_id_seq owned BY asset.global_id;
 
