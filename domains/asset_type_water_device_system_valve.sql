@@ -1,15 +1,15 @@
 CREATE TABLE IF NOT EXISTS asset_type_water_device_system_valve (
-    code smallserial PRIMARY KEY,
+    code smallint PRIMARY KEY,
     description varchar(64) NOT NULL,
     details varchar(255)
 );
 
-INSERT INTO asset_type_water_device_system_valve (description)
+INSERT INTO asset_type_water_device_system_valve (code, description)
 VALUES
-    ('Unknow'),
-    ('Bypass'),
-    ('Interconnect'),
-    ('Isolation Station'),
-    ('Pressure Zone'),
-    ('Supply'),
-    ('System');
+    (0, 'Unknow'),
+    (1, 'Bypass'),
+    (2, 'Interconnect'),
+    (3, 'Isolation Station'),
+    (4, 'Pressure Zone'),
+    (5, 'Supply'),
+    (6, 'System');

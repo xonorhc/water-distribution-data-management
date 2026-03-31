@@ -1,12 +1,12 @@
 CREATE TABLE IF NOT EXISTS asset_type_water_device_pump (
-    code smallserial PRIMARY KEY,
+    code smallint PRIMARY KEY,
     description varchar(64) NOT NULL,
     details varchar(255)
 );
 
-INSERT INTO asset_type_water_device_pump (description)
+INSERT INTO asset_type_water_device_pump (code, description)
 VALUES
-    ('Unknow'),
-    ('Bosster'),
-    ('Chemical'),
-    ('Primary');
+    (0, 'Unknow'),
+    (1, 'Bosster'),
+    (2, 'Chemical'),
+    (3, 'Primary');

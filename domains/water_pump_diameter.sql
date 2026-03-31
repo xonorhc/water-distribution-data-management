@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS water_pump_diameter (
-    code numeric(4, 2) PRIMARY KEY,
+    code smallint PRIMARY KEY,
     description varchar(64) NOT NULL,
     details varchar(255)
 );
@@ -7,16 +7,20 @@ CREATE TABLE IF NOT EXISTS water_pump_diameter (
 INSERT INTO water_pump_diameter (code, description)
 VALUES
     (0, 'Unknown'),
-    (4, '4"'),
-    (6, '6"'),
-    (8, '8"'),
-    (10, '10"'),
-    (12, '12"'),
-    (14, '14"'),
-    (15, '15"'),
-    (16, '16"'),
-    (18, '18"'),
-    (20, '20"'),
-    (24, '24"'),
-    (36, '36"'),
-    (48, '48"');
+    (100, '4"'),
+    (150, '6"'),
+    (200, '8"'),
+    (250, '10"'),
+    (300, '12"'),
+    (350, '14"'),
+    (375, '15"'),
+    (400, '16"'),
+    (450, '18"'),
+    (500, '20"'),
+    (600, '24"'),
+    (750, '30"'),
+    (900, '36"'),
+    (1000, '40"'),
+    (1050, '42"'),
+    (1200, '48"');
+

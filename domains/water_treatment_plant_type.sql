@@ -1,11 +1,11 @@
 CREATE TABLE IF NOT EXISTS water_treatment_plant_type (
-    code smallserial PRIMARY KEY,
+    code smallint PRIMARY KEY,
     description varchar(64) NOT NULL,
     details varchar(255)
 );
 
-INSERT INTO water_treatment_plant_type (description)
+INSERT INTO water_treatment_plant_type (code, description)
 VALUES
-    ('Goundwater'),
-    ('Surface Water'),
-    ('Desalination');
+    (1, 'Goundwater'),
+    (2, 'Surface Water'),
+    (3, 'Desalination');

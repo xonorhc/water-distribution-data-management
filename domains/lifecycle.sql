@@ -1,18 +1,19 @@
 CREATE TABLE IF NOT EXISTS lifecycle (
-    code smallserial PRIMARY KEY,
+    code smallint PRIMARY KEY,
     description varchar(64) NOT NULL,
     details varchar(255)
 );
 
-INSERT INTO lifecycle (description)
+INSERT INTO lifecycle (code, description)
 VALUES
-    ('Unknown'),
-    ('Proposed'),
-    ('Approved'),
-    ('Under Construction'),
-    ('In Service'),
-    ('To Be Retired'),
-    ('Abandoned'),
-    ('Retired'),
-    ('Removed'),
-    ('Out of Service');
+    (0, 'Unknown'),
+    (1, 'Proposed'),
+    (2, 'Approved'),
+    (3, 'Under Construction'),
+    (4, 'In Service'),
+    (5, 'To Be Retired'),
+    (6, 'Abandoned'),
+    (7, 'Retired'),
+    (8, 'Removed'),
+    (9, 'Out of Service');
+

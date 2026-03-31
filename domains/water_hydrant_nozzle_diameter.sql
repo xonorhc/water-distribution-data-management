@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS water_hydrant_nozzle_diameter (
-    code numeric(4, 2) PRIMARY KEY,
+    code smallint PRIMARY KEY,
     description varchar(64) NOT NULL,
     details varchar(255)
 );
@@ -7,9 +7,11 @@ CREATE TABLE IF NOT EXISTS water_hydrant_nozzle_diameter (
 INSERT INTO water_hydrant_nozzle_diameter (code, description)
 VALUES
     (0, 'Unknown'),
-    (2.5, '2 1/2"'),
-    (4.5, '4 1/2"'),
-    (5, '5"'),
-    (6, '6"'),
-    (4, '4"'),
-    (5.25, '5 1/4"');
+    (60, '2 1/2"'),
+    (100, '4"'),
+    (115, '4 1/2"'),
+    (125, '5"'),
+    (135, '5 1/4"'),
+    (150, '6"');
+m   
+

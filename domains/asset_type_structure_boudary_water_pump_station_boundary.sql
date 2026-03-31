@@ -1,11 +1,12 @@
 CREATE TABLE IF NOT EXISTS asset_type_structure_boudary_water_pump_station_boundary (
-    code smallserial PRIMARY KEY,
+    code smallint PRIMARY KEY,
     description varchar(64) NOT NULL,
     details varchar(255)
 );
 
-INSERT INTO asset_type_structure_boudary_water_pump_station_boundary (description)
+INSERT INTO asset_type_structure_boudary_water_pump_station_boundary (code, description)
 VALUES
-    ('Unknow'),
-    ('Booster Station'),
-    ('Pump Station');
+    (0, 'Unknow'),
+    (1, 'Booster Station'),
+    (2, 'Pump Station');
+

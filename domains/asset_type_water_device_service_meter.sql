@@ -1,14 +1,14 @@
 CREATE TABLE IF NOT EXISTS asset_type_water_device_service_meter (
-    code smallserial PRIMARY KEY,
+    code smallint PRIMARY KEY,
     description varchar(64) NOT NULL,
     details varchar(255)
 );
 
-INSERT INTO asset_type_water_device_service_meter (description)
+INSERT INTO asset_type_water_device_service_meter (code, description)
 VALUES
-    ('Unknow'),
-    ('Commercial'),
-    ('Fire'),
-    ('Industrial'),
-    ('Irrigation'),
-    ('Residential');
+    (0, 'Unknow'),
+    (1, 'Commercial'),
+    (2, 'Fire'),
+    (3, 'Industrial'),
+    (4, 'Irrigation'),
+    (5, 'Residential');

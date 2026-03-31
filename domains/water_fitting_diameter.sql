@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS water_fitting_diameter (
-    code numeric(4, 2) PRIMARY KEY,
+    code smallint PRIMARY KEY,
     description varchar(64) NOT NULL,
     details varchar(255)
 );

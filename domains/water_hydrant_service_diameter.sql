@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS water_hydrant_service_diameter (
-    code numeric(4, 2) PRIMARY KEY,
+    code smallint PRIMARY KEY,
     description varchar(64) NOT NULL,
     details varchar(255)
 );
@@ -7,9 +7,10 @@ CREATE TABLE IF NOT EXISTS water_hydrant_service_diameter (
 INSERT INTO water_hydrant_service_diameter (code, description)
 VALUES
     (0, 'Unknown'),
-    (4, '4"'),
-    (4.5, '4 1/2"'),
-    (5.25, '5 1/4"'),
-    (6, '6"'),
-    (8, '8"'),
-    (10, '10"');
+    (100, '4"'),
+    (115, '4 1/2"'),
+    (135, '5 1/4"'),
+    (150, '6"'),
+    (200, '8"'),
+    (250, '10"');
+

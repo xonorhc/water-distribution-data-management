@@ -1,13 +1,13 @@
 CREATE TABLE IF NOT EXISTS asset_type_water_assembly_backflow (
-    code smallserial PRIMARY KEY,
+    code smallint PRIMARY KEY,
     description varchar(64) NOT NULL,
     details varchar(255)
 );
 
-INSERT INTO asset_type_water_assembly_backflow (description)
+INSERT INTO asset_type_water_assembly_backflow (code, description)
 VALUES
-    ('Unknow'),
-    ('Double Check Detector'),
-    ('Double Check Valve'),
-    ('Reduced Pressure Detector'),
-    ('Reduced Pressure Zone');
+    (0, 'Unknow'),
+    (1, 'Double Check Detector'),
+    (2, 'Double Check Valve'),
+    (3, 'Reduced Pressure Detector'),
+    (4, 'Reduced Pressure Zone');

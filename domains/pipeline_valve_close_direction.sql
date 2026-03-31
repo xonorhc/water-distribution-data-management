@@ -1,10 +1,10 @@
 CREATE TABLE IF NOT EXISTS pipeline_valve_close_direction (
-    code smallserial PRIMARY KEY,
+    code smallint PRIMARY KEY,
     description varchar(64) NOT NULL,
     details varchar(255)
 );
 
-INSERT INTO pipeline_valve_close_direction (description)
+INSERT INTO pipeline_valve_close_direction (code, description)
 VALUES
-    ('Counter Clockwise'),
-    ('Clockwise');
+    (1, 'Counter Clockwise'),
+    (2, 'Clockwise');

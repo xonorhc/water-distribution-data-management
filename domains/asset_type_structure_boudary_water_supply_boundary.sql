@@ -1,12 +1,12 @@
 CREATE TABLE IF NOT EXISTS asset_type_structure_boudary_water_supply_boundary (
-    code smallserial PRIMARY KEY,
+    code smallint PRIMARY KEY,
     description varchar(64) NOT NULL,
     details varchar(255)
 );
 
-INSERT INTO asset_type_structure_boudary_water_supply_boundary (description)
+INSERT INTO asset_type_structure_boudary_water_supply_boundary (code, description)
 VALUES
-    ('Unknow'),
-    ('Interconnect'),
-    ('Treatment Plant'),
-    ('Well');
+    (0, 'Unknow'),
+    (1, 'Interconnect'),
+    (2, 'Treatment Plant'),
+    (3, 'Well');

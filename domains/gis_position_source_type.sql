@@ -1,14 +1,14 @@
 CREATE TABLE IF NOT EXISTS gis_position_source_type (
-    code smallserial PRIMARY KEY,
+    code smallint PRIMARY KEY,
     description varchar(64) NOT NULL,
     details varchar(255)
 );
 
-INSERT INTO gis_position_source_type (description)
+INSERT INTO gis_position_source_type (code, description)
 VALUES
-    ('Unknown'),
-    ('User defined'),
-    ('Integrated (System) Location Provider'),
-    ('External GNSS Receive'),
-    ('Network Location Provider'),
-    ('Snapped');
+    (0, 'Unknown'),
+    (1, 'User defined'),
+    (2, 'Integrated (System) Location Provider'),
+    (3, 'External GNSS Receive'),
+    (4, 'Network Location Provider'),
+    (5, 'Snapped');

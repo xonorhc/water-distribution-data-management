@@ -1,14 +1,14 @@
 CREATE TABLE IF NOT EXISTS water_service_material (
-    code smallserial PRIMARY KEY,
+    code smallint PRIMARY KEY,
     description varchar(64) NOT NULL,
     details varchar(255)
 );
 
-INSERT INTO water_service_material (description)
+INSERT INTO water_service_material (code, description)
 VALUES
-    ('Unknown'),
-    ('Cast Iron - CAS'),
-    ('Copper - COP'),
-    ('Ductile Iron - DIP'),
-    ('Polyvinyl Chloride - PVC'),
-    ('Lead - LP');
+    (0, 'Unknown'),
+    (1, 'Cast Iron - CAS'),
+    (2, 'Copper - COP'),
+    (3, 'Ductile Iron - DIP'),
+    (4, 'Polyvinyl Chloride - PVC'),
+    (5, 'Lead - LP');

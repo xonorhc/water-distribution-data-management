@@ -1,14 +1,14 @@
 CREATE TABLE IF NOT EXISTS water_valve_type (
-    code smallserial PRIMARY KEY,
+    code smallint PRIMARY KEY,
     description varchar(64) NOT NULL,
     details varchar(255)
 );
 
-INSERT INTO water_valve_type (description)
+INSERT INTO water_valve_type (code, description)
 VALUES
-    ('Unknown'),
-    ('Ball'),
-    ('Butterfly'),
-    ('Cone'),
-    ('Gate'),
-    ('Plug');
+    (0, 'Unknown'),
+    (1, 'Ball'),
+    (2, 'Butterfly'),
+    (3, 'Cone'),
+    (4, 'Gate'),
+    (5, 'Plug');

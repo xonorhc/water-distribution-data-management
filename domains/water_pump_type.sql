@@ -1,15 +1,15 @@
 CREATE TABLE IF NOT EXISTS water_pump_type (
-    code smallserial PRIMARY KEY,
+    code smallint PRIMARY KEY,
     description varchar(64) NOT NULL,
     details varchar(255)
 );
 
-INSERT INTO water_pump_type (description)
+INSERT INTO water_pump_type (code, description)
 VALUES
-    ('Unknown'),
-    ('Axial Flow'),
-    ('Centrifugal'),
-    ('Jet'),
-    ('Reciprocating'),
-    ('Rotary'),
-    ('Turbine');
+    (0, 'Unknown'),
+    (1, 'Axial Flow'),
+    (2, 'Centrifugal'),
+    (3, 'Jet'),
+    (4, 'Reciprocating'),
+    (5, 'Rotary'),
+    (6, 'Turbine');
