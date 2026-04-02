@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS service (
     object_id serial PRIMARY KEY, -- Unique identifier for each feature in the layer
     asset_type smallint REFERENCES asset_type_water_line_service (id) NOT NULL DEFAULT 0, -- Categorization of the type of asset represented by the feature
     asset_id varchar(64), -- Identifier assigned to the asset for tracking purposes
-    diameter smallint REFERENCES water_service_diameter (id) DEFAULT 0, -- Measurement of the assets diameter
+    diameter smallint REFERENCES water_main (id) CHECK (diameter BETWEEN 15 AND 250), -- Measurement of the assets diameter
     material smallint REFERENCES water_service_material (id) DEFAULT 0, -- Composition of the assets construction material
     design_type smallint REFERENCES water_type (id) DEFAULT 0, -- Classification of the water type associated with the asset
     install_date date, -- Date when the asset was installed
@@ -31,3 +31,4 @@ CREATE TABLE IF NOT EXISTS service (
 CREATE INDEX ON service USING gist (shape);
 
 CREATE INDEX ON service (shape_length);
+

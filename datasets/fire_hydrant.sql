@@ -3,8 +3,8 @@ CREATE TABLE IF NOT EXISTS fire_hydrant (
     asset_id varchar(64) DEFAULT 'FIRE HYDRANT', -- Identifier assigned to the asset for tracking purposes
     manufacturer bigint, -- Name of the company that produced the asset
     model bigint, -- Specific model designation of the asset
-    diameter smallint DEFAULT 0, -- Measurement of the main diameter of the fire hydrnat
-    secondary_diameter smallint DEFAULT 0, -- Measurement of the nozzle diameter of the fire hydrnat
+    diameter smallint checks (diameter BETWEEN 100 AND 250), -- Measurement of the main diameter of the fire hydrnat
+    secondary_diameter smallint CHECK (secondary_diameter BETWEEN 65 AND 150), -- Measurement of the nozzle diameter of the fire hydrnat
     last_maint date, -- Date of the most recent maintenance performed on the asset
     assignment_type smallint, -- Type of task assigned for the fire hydrant
     assignment_due date, -- Deadline for completing the assigned task
@@ -18,8 +18,8 @@ CREATE TABLE IF NOT EXISTS fire_hydrant (
     PRIMARY KEY (object_id),
     FOREIGN KEY (asset_type) REFERENCES asset_type_water_device_fire_hydrant (code),
     FOREIGN KEY (manufacturer) REFERENCES manufactured_types (code),
-    FOREIGN KEY (diameter) REFERENCES water_hydrant_service_diameter (code),
-    FOREIGN KEY (secondary_diameter) REFERENCES water_hydrant_nozzle_diameter (code),
+    FOREIGN KEY (diameter) REFERENCES water_diameter (code),
+    FOREIGN KEY (secondary_diameter) REFERENCES water_diameter (code),
     FOREIGN KEY (assignment_type) REFERENCES fire_hydrant_assignment_type (code),
     FOREIGN KEY (adoption_status) REFERENCES adoption_status (code),
     FOREIGN KEY (public_view) REFERENCES fire_hydrant_publicview (code)

@@ -4,12 +4,12 @@ CREATE TABLE IF NOT EXISTS service_meter (
     manufacturer smallint, -- Name of the company that produced the asset
     model bigint, -- Specific model designation of the asset
     last_maint date, -- Date of the most recent maintenance performed on the asset
-    diameter numeric DEFAULT 0, -- Measurement of the assets diameter
+    diameter smallint CHECK (diameter BETWEEN 20 AND 600), -- Measurement of the assets diameter
     account_id varchar(50), -- Identifierassociated with the account linked to the service connection
     PRIMARY KEY (object_id),
     FOREIGN KEY (asset_type) REFERENCES asset_type_water_device_service_meter (code),
     FOREIGN KEY (manufacturer) REFERENCES manufactured_types (code),
-    FOREIGN KEY (diameter) REFERENCES water_meter_diameter (code)
+    FOREIGN KEY (diameter) REFERENCES water_diameter (code)
 )
 INHERITS (
     punctual_asset

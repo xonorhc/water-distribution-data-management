@@ -87,8 +87,7 @@ erDiagram
     }
     fire_hydrant }o--|| asset_type_water_device_fire_hydrant : "is"
     fire_hydrant }o--|| manufactured_types: "has"
-    fire_hydrant }o--|| water_hydrant_service_diameter : "has"
-    fire_hydrant }o--|| water_hydrant_nozzle_diameter  : "has"
+    fire_hydrant }o--|| water_diameter : "has"
     fire_hydrant }o--|| fire_hydrant_assignment_type   : "has"
     fire_hydrant }o--|| adoption_status    : "has"
     fire_hydrant }o--|| fire_hydrant_publicview    : "has"
@@ -98,9 +97,11 @@ erDiagram
         object_id integer PK
         asset_id varchar
         asset_type smallint FK
+        diameter smallint FK
+        secondary_diameter smallint FK
     }
     fitting }o--|| asset_type_water_junction_fitting    : "has"
-    fitting }o--|| water_fitting_diameter    : "has"
+    fitting }o--|| water_diameter : "has"
 
     punctual_asset ||--o| flow_valve: "inherit"
     flow_valve {
@@ -173,7 +174,7 @@ erDiagram
     }
     pump }o--|| asset_type_water_device_pump : "has"
     pump }o--|| manufactured_types : "has"
-    pump }o--|| water_pump_diameter : "has"
+    pump }o--|| water_diameter : "has"
     pump }o--|| water_pump_type : "has"
 
     punctual_asset ||--o| sample_station: "inherit"
@@ -208,7 +209,7 @@ erDiagram
     }
     service_meter }o--|| asset_type_water_device_service_meter : "is"
     service_meter }o--|| manufactured_types : "has"
-    service_meter }o--|| water_meter_diameter : "has"
+    service_meter }o--|| water_diameter : "has"
 
     punctual_asset ||--o| service_valve: "inherit"
     service_valve {
@@ -255,9 +256,9 @@ erDiagram
         last_maint date
         diameter numeric
     }
-    storage }o--|| asset_type_water_device_system_meter : "is"
-    storage }o--|| manufactured_types : "has"
-    storage }o--|| water_meter_diameter : "has"
+    system_meter }o--|| asset_type_water_device_system_meter : "is"
+    system_meter }o--|| manufactured_types : "has"
+    system_meter }o--|| water_diameter : "has"
 
     punctual_asset ||--o| system_valve: "inherit"
     system_valve {

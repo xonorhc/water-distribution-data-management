@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS pressure_valve (
     asset_id varchar(64) DEFAULT 'PRESSURE VALVE', -- Identifier assigned to the asset for tracking purposes
     manufacturer smallint, -- Name of the company that produced the asset
     model bigint, -- Specific model designation of the asset
-    diameter smallint DEFAULT 0, -- Measurement of the assets diameter
+    diameter smallint CHECK (diameter BETWEEN 15 AND 1900), -- Measurement of the assets diameter
     pressure numeric, -- Pressure rating or capacity of the valve
     last_maint date, -- Date of the most recent maintenance performed on the asset
     PRIMARY KEY (object_id),

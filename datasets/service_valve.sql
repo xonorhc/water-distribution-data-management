@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS service_valve (
     manufacturer smallint, -- Name of the company that produced the asset
     model bigint, -- Specific model designation of the asset
     last_maint date, -- Date of the most recent maintenance performed on the asset
-    diameter smallint DEFAULT 0, -- Measurement of the assets diameter
+    diameter smallint CHECK (diameter BETWEEN 15 AND 1900), -- Measurement of the assets diameter
     design_type smallint DEFAULT 0, -- Classification of the valve design
     valve_status smallint DEFAULT 1, -- Current operational status of the valve
     clockwise_to_close smallint, -- Indicates the direction required to close the valve

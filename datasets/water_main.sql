@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS water_main (
     object_id serial PRIMARY KEY, -- Unique identifier for each feature in the layer
     asset_type smallint REFERENCES asset_type_water_line_water_main (id) NOT NULL DEFAULT 0, -- Categorization of the type of asset represented by the feature
     asset_id varchar(64), -- Identifier assigned to the asset for tracking purposes
-    diameter smallint REFERENCES water_main_diameter (id) DEFAULT 0, -- Measurement of the assets diameter
+    diameter smallint REFERENCES water_diameter (id) CHECK (diameter BETWEEN 100 AND 1900), -- Measurement of the assets diameter
     material smallint REFERENCES water_main_material (id) DEFAULT 0, -- Composition of the assets construction material
     design_type smallint REFERENCES water_type (id) DEFAULT 0, -- Classification of the water type associated with the asset
     install_date date, -- Date when the asset was installed
@@ -24,10 +24,9 @@ CREATE TABLE IF NOT EXISTS water_main (
     created_date timestamp, -- Date and time when the feature was created
     last_edited_user varchar(255), -- Tracks the user who last edited the record
     last_edited_date timestamp, -- Date and time of the most recent modification to the record
-    shape_length numeric, -- Length of the geometry associated with the feature
-    shape geometry(linestring, 4326) -- Geometric representation of the feature
 );
 
 CREATE INDEX ON water_main USING gist (shape);
 
 CREATE INDEX ON water_main (shape_length);
+
