@@ -299,7 +299,7 @@ erDiagram
 
     punctual_asset ||--o| well: "inherit"
     well {
-        object_id serial
+        object_id serial PK
         asset_id varchar
         asset_type smallint FK
         last_maint date
@@ -311,5 +311,52 @@ erDiagram
     }
     well }o--|| asset_type_water_device_supply_welltype : "is"
     well }o--|| water_supply_filtration_type : "has"
+
+    linear_asset ||--o| pipe_casing: "inherit"
+    pipe_casing {
+        object_id serial PK
+        asset_id varchar
+        asset_type smallint FK
+        fill_type smallint FK
+        diameter smallint FK
+        measured_length numeric
+    }
+    pipe_casing }o--|| assset_type_structure_line_pipeline_casing : "is"
+    pipe_casing }o--|| pipeline_casing_diameter : "has"
+    pipe_casing }o--|| pipeline_casing_fill_type : "has"
+
+    linear_asset ||--o| service: "inherit"
+    service {
+        object_id serial PK
+        asset_id varchar
+        asset_type smallint FK
+        design_type smallint FK
+        material smallint FK
+        diameter smallint FK
+        measured_length numeric
+        tracer_wire smallint FK
+    }
+    service }o--|| asset_type_water_line_service : "is"
+    service }o--|| water_diameter : "has"
+    service }o--|| water_service_material : "has"
+    service }o--|| water_type : "has"
+    service }o--|| yes_no : "has"
+
+    linear_asset ||--o| water_main: "inherit"
+    water_main {
+        object_id serial PK
+        asset_id varchar
+        asset_type smallint FK
+        design_type smallint FK
+        material smallint FK
+        diameter smallint FK
+        measured_length numeric
+        tracer_wire smallint FK
+    }
+    water_main }o--|| asset_type_water_line_water_main : "is"
+    water_main }o--|| water_diameter : "has"
+    water_main }o--|| water_main_material : "has"
+    water_main }o--|| water_type : "has"
+    water_main }o--|| yes_no : "has"
 
 ```
