@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS pump (
     asset_id varchar(64) DEFAULT 'PUMP',
 
     manufacturer smallint,
-    model_desing bigint,
+    design_model bigint,
     last_maint date,
     diameter smallint CHECK (diameter BETWEEN 100 AND 1200),
     secondary_diameter smallint CHECK (secondary_diameter BETWEEN 100 AND 1200),
@@ -28,7 +28,7 @@ INHERITS (
 CREATE INDEX ON pump USING gist (shape);
 
 COMMENT ON COLUMN pump.manufacturer IS 'Name of the company that produced the asset';
-COMMENT ON COLUMN pump.model_desing IS 'Specific model designation of the asset';
+COMMENT ON COLUMN pump.design_model IS 'Specific model designation of the asset';
 COMMENT ON COLUMN pump.last_maint IS 'Date of the most recent maintenance performed on the asset';
 COMMENT ON COLUMN pump.diameter IS 'Measurement of the inlet diameter of the pump';
 COMMENT ON COLUMN pump.secondary_diameter IS 'Measurement od the outlet diameter of the pump';

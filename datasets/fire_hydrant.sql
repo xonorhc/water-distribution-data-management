@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS fire_hydrant (
     asset_id varchar(64) DEFAULT 'FIRE HYDRANT',
 
     manufacturer bigint,
-    model_design bigint,
+    design_model bigint,
     diameter smallint CHECK (diameter BETWEEN 100 AND 250),
     secondary_diameter smallint CHECK (secondary_diameter BETWEEN 65 AND 150),
     last_maint date,
@@ -35,7 +35,7 @@ INHERITS (
 CREATE INDEX ON fire_hydrant USING gist (shape);
 
 COMMENT ON COLUMN fire_hydrant.manufacturer IS 'Name of the company that produced the asset';
-COMMENT ON COLUMN fire_hydrant.model_design IS 'Specific model designation of the asset';
+COMMENT ON COLUMN fire_hydrant.design_model IS 'Specific model designation of the asset';
 COMMENT ON COLUMN fire_hydrant.diameter IS 'Measurement of the main diameter of the fire hydrnat';
 COMMENT ON COLUMN fire_hydrant.secondary_diameter IS 'Measurement of the nozzle diameter of the fire hydrnat';
 COMMENT ON COLUMN fire_hydrant.last_maint IS 'Date of the most recent maintenance performed on the asset';

@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS backflow (
     asset_id varchar(64) DEFAULT 'BACKFLOW',
 
     manufacturer smallint,
-    model_design bigint,
+    design_model bigint,
     is_locked smallint DEFAULT 0,
 
     FOREIGN KEY (asset_type) REFERENCES asset_type_water_assembly_backflow (id),
@@ -20,7 +20,7 @@ INHERITS (
 CREATE INDEX ON backflow USING gist (shape);
 
 COMMENT ON COLUMN backflow.is_locked IS 'Indicates whether the asset is locked or accessible';
-COMMENT ON COLUMN backflow.model_design IS 'Specific model designation of the asset';
+COMMENT ON COLUMN backflow.design_model IS 'Specific model designation of the asset';
 COMMENT ON COLUMN backflow.manufacturer IS 'Name of the company that produced the asset';
 
 COMMIT;

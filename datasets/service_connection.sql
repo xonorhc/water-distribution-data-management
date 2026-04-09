@@ -3,10 +3,12 @@ BEGIN;
 CREATE TABLE IF NOT EXISTS service_connection (
     object_id serial,
     asset_id varchar(64) DEFAULT 'SERVICE CONNECTION',
+
     last_maint date,
     account_id varchar(50),
     critical boolean DEFAULT false,
     metered boolean DEFAULT false,
+
     FOREIGN KEY (asset_type) REFERENCES asset_type_water_device_service_connection (code),
     PRIMARY KEY (object_id)
 )
