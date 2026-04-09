@@ -1,12 +1,16 @@
+BEGIN;
+
 CREATE TABLE IF NOT EXISTS flushing_and_blow_off (
-    object_id serial, -- Unique identifier for each feature in the layer
-    asset_id varchar(64) DEFAULT 'FLUSHING AND BLOW OF', -- Identifier assigned to the asset for tracking purposes
-    manufacturer smallint, -- Name of the company that produced the asset
-    model bigint, -- Specific model designation of the asset
-    last_maint date, -- Date of the most recent maintenance performed on the asset
-    PRIMARY KEY (object_id),
+    object_id serial,
+    asset_id varchar(64) DEFAULT 'FLUSHING AND BLOW OF',
+
+    manufacturer smallint,
+    model_design bigint,
+    last_maint date,
+
     FOREIGN KEY (asset_type) REFERENCES asset_type_water_device_flushing_and_blow_off (code),
-    FOREIGN KEY (manufacturer) REFERENCES manufactured_types (code)
+    FOREIGN KEY (manufacturer) REFERENCES manufactured_types (code),
+    PRIMARY KEY (object_id)
 )
 INHERITS (
     punctual_asset
@@ -14,3 +18,8 @@ INHERITS (
 
 CREATE INDEX ON flushing_and_blow_off USING gist (shape);
 
+COMMENT ON COLUMN flushing_and_blow_off.manufacturer IS 'Name of the company that produced the asset';
+COMMENT ON COLUMN flushing_and_blow_off.model_design IS 'Specific model designation of the asset';
+COMMENT ON COLUMN flushing_and_blow_off.last_maint IS 'Date of the most recent maintenance performed on the asset';
+
+COMMIT;

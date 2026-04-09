@@ -1,12 +1,16 @@
+BEGIN;
+
 CREATE TABLE IF NOT EXISTS storage (
-    object_id serial, -- Unique identifier for each feature in the layer
-    asset_id varchar(64) DEFAULT 'STORAGE', -- Identifier assigned to the asset for tracking purposes
-    last_maint date, -- Date of the most recent maintenance performed on the asset
-    height numeric, -- Vertical measurement of the storage asset
-    width numeric, -- Horizontal measurement of the storage asset
-    volume numeric, -- Capacity or volume of the storage asset
-    PRIMARY KEY (object_id),
-    FOREIGN KEY (asset_type) REFERENCES asset_type_water_device_storage (code)
+    object_id serial,
+    asset_id varchar(64) DEFAULT 'STORAGE',
+
+    last_maint date,
+    height numeric,
+    width numeric,
+    volume numeric,
+
+    FOREIGN KEY (asset_type) REFERENCES asset_type_water_device_storage (code),
+    PRIMARY KEY (object_id)
 )
 INHERITS (
     punctual_asset
@@ -14,3 +18,9 @@ INHERITS (
 
 CREATE INDEX ON storage USING gist (shape);
 
+COMMENT ON COLUMN storage.last_maint IS 'Date of the most recent maintenance performed on the asset';
+COMMENT ON COLUMN storage.height IS 'Vertical measurement of the storage asset';
+COMMENT ON COLUMN storage.width IS 'Horizontal measurement of the storage asset';
+COMMENT ON COLUMN storage.volume IS 'Capacity or volume of the storage asset';
+
+COMMIT;
