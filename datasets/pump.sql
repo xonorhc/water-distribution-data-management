@@ -10,9 +10,9 @@ CREATE TABLE IF NOT EXISTS pump (
     diameter smallint CHECK (diameter BETWEEN 100 AND 1200),
     secondary_diameter smallint CHECK (secondary_diameter BETWEEN 100 AND 1200),
     pressure numeric,
-    design_type smallint DEFAULT 0,
+    design_type smallint ,
     design_info numeric,
-    operable boolean DEFAULT 1,
+    operable boolean ,
 
     FOREIGN KEY (asset_type) REFERENCES asset_type_water_device_pump (code),
     FOREIGN KEY (manufacturer) REFERENCES manufactured_types (code),

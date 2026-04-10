@@ -4,17 +4,16 @@ CREATE TABLE IF NOT EXISTS water_main (
     object_id serial,
     asset_id varchar(64) DEFAULT 'WATER MAIN',
 
-    design_type smallint DEFAULT 0,
-    material smallint DEFAULT 0,
+    design_type smallint,
+    material smallint,
     diameter smallint CHECK (diameter BETWEEN 100 AND 1900),
     measured_length numeric(8, 2),
-    tracer_wire smallint DEFAULT 0,
+    tracer_wire boolean,
 
     FOREIGN KEY (asset_type) REFERENCES asset_type_water_line_water_main (code),
     FOREIGN KEY (diameter) REFERENCES water_diameter (code),
     FOREIGN KEY (material) REFERENCES water_main_material (code),
     FOREIGN KEY (design_type) REFERENCES water_type (code),
-    FOREIGN KEY (tracer_wire) REFERENCES yes_no (code),
     PRIMARY KEY (object_id)
 )
 INHERITS (

@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE TABLE IF NOT EXISTS asset_type_structure_line_pipeline_casing (
     code smallint PRIMARY KEY,
     description varchar(64) NOT NULL,
@@ -6,5 +8,6 @@ CREATE TABLE IF NOT EXISTS asset_type_structure_line_pipeline_casing (
 
 INSERT INTO asset_type_structure_line_pipeline_casing (code, description)
 VALUES
-    (0, 'Unknow'),
-    (1, 'Casing');
+(1, 'Casing');
+
+COMMIT;

@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE TABLE IF NOT EXISTS asset_owner (
     code smallint PRIMARY KEY,
     description varchar(64) NOT NULL,
@@ -6,6 +8,8 @@ CREATE TABLE IF NOT EXISTS asset_owner (
 
 INSERT INTO asset_owner (code, description)
 VALUES
-    (1, 'Our Agency'),
-    (2, 'Private'),
-    (3, 'Other');
+(1, 'Our Agency'),
+(2, 'Private'),
+(3, 'Other');
+
+COMMIT;

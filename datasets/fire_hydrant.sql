@@ -14,18 +14,17 @@ CREATE TABLE IF NOT EXISTS fire_hydrant (
     assigned_on date,
     station varchar(64),
     shift varchar(64),
+    public_view boolean,
     adoption_status smallint,
-    public_view smallint,
     adopted_by varchar(64),
     adopted_on date,
 
     FOREIGN KEY (asset_type) REFERENCES asset_type_water_device_fire_hydrant (code),
-    FOREIGN KEY (manufacturer) REFERENCES manufactured_types (code),
+    FOREIGN KEY (manufacturer) REFERENCES water_fire_hydrant_manufacturer (code),
     FOREIGN KEY (diameter) REFERENCES water_diameter (code),
     FOREIGN KEY (secondary_diameter) REFERENCES water_diameter (code),
     FOREIGN KEY (assignment_type) REFERENCES fire_hydrant_assignment_type (code),
     FOREIGN KEY (adoption_status) REFERENCES adoption_status (code),
-    FOREIGN KEY (public_view) REFERENCES fire_hydrant_publicview (code),
     PRIMARY KEY (object_id)
 )
 INHERITS (

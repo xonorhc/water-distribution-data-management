@@ -7,10 +7,9 @@ CREATE TABLE IF NOT EXISTS interconnect (
     last_maint date,
     permitted_flow numeric,
     avaible_flow numeric,
-    emergency smallint,
+    emergency boolean,
 
     FOREIGN KEY (asset_type) REFERENCES water_interconnect_connection_type (code),
-    FOREIGN KEY (emergency) REFERENCES yes_no (code),
     PRIMARY KEY (object_id)
 )
 INHERITS (

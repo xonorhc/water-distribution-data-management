@@ -6,11 +6,10 @@ CREATE TABLE IF NOT EXISTS backflow (
 
     manufacturer smallint,
     design_model bigint,
-    is_locked smallint DEFAULT 0,
+    is_locked boolean,
 
     FOREIGN KEY (asset_type) REFERENCES asset_type_water_assembly_backflow (id),
     FOREIGN KEY (manufacturer) REFERENCES manufactured_types (code),
-    FOREIGN KEY (is_locked) REFERENCES yes_no (code),
     PRIMARY KEY (object_id)
 )
 INHERITS (

@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE TABLE IF NOT EXISTS pipeline_casing_fill_type (
     code smallint PRIMARY KEY,
     description varchar(64) NOT NULL,
@@ -6,7 +8,8 @@ CREATE TABLE IF NOT EXISTS pipeline_casing_fill_type (
 
 INSERT INTO pipeline_casing_fill_type (code, description)
 VALUES
-    (0, 'Unknown'),
-    (1, 'Grout'),
-    (2, 'Pea Gravel'),
-    (3, 'Sand');
+(1, 'Grout'),
+(2, 'Pea Gravel'),
+(3, 'Sand');
+
+COMMIT;

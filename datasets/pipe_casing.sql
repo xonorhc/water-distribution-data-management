@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS pipe_casing (
     diameter smallint,
     measured_length numeric(8, 2) CHECK (measured_length > 0),
 
-    FOREIGN KEY (asset_type) REFERENCES assset_type_structure_line_pipeline_casing (code),
+    FOREIGN KEY (asset_type) REFERENCES asset_type_structure_line_pipeline_casing (code),
     FOREIGN KEY (diameter) REFERENCES pipeline_casing_diameter (code),
     FOREIGN KEY (fill_type) REFERENCES pipeline_casing_fill_type (code),
     PRIMARY KEY (object_id)

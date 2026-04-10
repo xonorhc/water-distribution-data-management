@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE TABLE IF NOT EXISTS water_type (
     code smallint PRIMARY KEY,
     description varchar(64) NOT NULL,
@@ -6,10 +8,11 @@ CREATE TABLE IF NOT EXISTS water_type (
 
 INSERT INTO water_type (code, description)
 VALUES
-    (0, 'Unknown'),
-    (1, 'Potable'),
-    (2, 'Irrigation'),
-    (3, 'Fire'),
-    (4, 'Raw'),
-    (5, 'Intermediate'),
-    (6, 'Finished');
+(1, 'Potable'),
+(2, 'Irrigation'),
+(3, 'Fire'),
+(4, 'Raw'),
+(5, 'Intermediate'),
+(6, 'Finished');
+
+COMMIT;

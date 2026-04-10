@@ -21,7 +21,7 @@ INHERITS (
 CREATE INDEX ON flow_valve USING gist (shape);
 
 COMMENT ON COLUMN flow_valve.manufacturer IS 'Name of the company that produced the asset';
-COMMENT ON COLUMN flow_valve.design_model IS 'Specific model designation of the asset';
+COMMENT ON COLUMN flow_valve.design_model IS 'Reference to the specific model of the asset';
 COMMENT ON COLUMN flow_valve.diameter IS 'Measurement of the assets diameter';
 COMMENT ON COLUMN flow_valve.last_maint IS 'Date of the most recent maintenance performed on the asset';
 

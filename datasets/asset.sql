@@ -7,10 +7,10 @@ CREATE TABLE IF NOT EXISTS asset (
 
     object_id integer,
     asset_id varchar(64),
-    asset_type smallint NOT NULL DEFAULT 0,
+    asset_type smallint,
     nickname varchar(64),
 
-    lifecycle_status smallint NOT NULL DEFAULT 8,
+    lifecycle_status smallint NOT NULL DEFAULT 4,
     install_date date,
     inservice_date date,
     retired_date date,
@@ -18,8 +18,8 @@ CREATE TABLE IF NOT EXISTS asset (
     main_by smallint DEFAULT 1,
     notes varchar(2000),
 
-    spatial_source smallint DEFAULT 0,
-    spatial_confidence smallint DEFAULT 0,
+    spatial_source smallint,
+    spatial_confidence smallint,
     latitude numeric(9, 7),
     longitude numeric(9, 7),
     altitude numeric(6, 3),

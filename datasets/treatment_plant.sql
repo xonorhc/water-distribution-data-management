@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS treatment_plant (
     permitted_capacity numeric,
     rated_capacity numeric,
     average_daily_flow numeric,
-    filtration_type smallint DEFAULT 0,
+    filtration_type smallint,
 
     FOREIGN KEY (asset_type) REFERENCES water_treatment_plant_type (code),
     FOREIGN KEY (filtration_type) REFERENCES water_supply_filtration_type (code),

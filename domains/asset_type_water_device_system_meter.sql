@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE TABLE IF NOT EXISTS asset_type_water_device_system_meter (
     code smallint PRIMARY KEY,
     description varchar(64) NOT NULL,
@@ -6,8 +8,9 @@ CREATE TABLE IF NOT EXISTS asset_type_water_device_system_meter (
 
 INSERT INTO asset_type_water_device_system_meter (code, description)
 VALUES
-    (0, 'Unknow'),
-    (1, 'Bulk'),
-    (2, 'DMA'),
-    (3, 'Emergency Connection'),
-    (4, 'Pump Station');
+(1, 'Bulk'),
+(2, 'DMA'),
+(3, 'Emergency Connection'),
+(4, 'Pump Station');
+
+COMMIT;

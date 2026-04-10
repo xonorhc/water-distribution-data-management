@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE TABLE IF NOT EXISTS water_supply_filtration_type (
     code smallint PRIMARY KEY,
     description varchar(64) NOT NULL,
@@ -6,9 +8,10 @@ CREATE TABLE IF NOT EXISTS water_supply_filtration_type (
 
 INSERT INTO water_supply_filtration_type (code, description)
 VALUES
-    (0, 'Unknown'),
-    (1, 'Carbon'),
-    (2, 'Reverse Osmosis'),
-    (3, 'Ultraviolet Light'),
-    (4, 'Sediment'),
-    (5, 'Biological');
+(1, 'Carbon'),
+(2, 'Reverse Osmosis'),
+(3, 'Ultraviolet Light'),
+(4, 'Sediment'),
+(5, 'Biological');
+
+COMMIT;
