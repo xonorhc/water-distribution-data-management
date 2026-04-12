@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS backflow (
     design_model bigint,
     is_locked boolean,
 
-    FOREIGN KEY (asset_type) REFERENCES asset_type_water_assembly_backflow (id),
+    FOREIGN KEY (asset_type) REFERENCES asset_type_water_assembly_backflow (code),
     FOREIGN KEY (manufacturer) REFERENCES manufactured_types (code),
     PRIMARY KEY (object_id)
 )
