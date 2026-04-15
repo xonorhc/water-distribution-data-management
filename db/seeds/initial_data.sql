@@ -1,31 +1,31 @@
 -- CODELIST: adoption_status
-INSERT INTO adoption_status (code, description)
+INSERT INTO codelist.adoption_status (code, description)
 VALUES
     (1, 'Available'),
     (2, 'Adopted');
 
 -- CODELIST: asset_manager
-INSERT INTO asset_manager (code, description)
+INSERT INTO codelist.asset_manager (code, description)
 VALUES
     (1, 'Our Agency'),
     (2, 'Private'),
     (3, 'Other');
 
 -- CODELIST: asset_owner
-INSERT INTO asset_owner (code, description)
+INSERT INTO codelist.asset_owner (code, description)
 VALUES
     (1, 'Our Agency'),
     (2, 'Private'),
     (3, 'Other');
 
 -- CODELIST: asset_type_structure_boundary_water_pump_station_boundary
-INSERT INTO asset_type_structure_boundary_water_pump_station_boundary (code, description)
+INSERT INTO codelist.asset_type_structure_boundary_water_pump_station_boundary (code, description)
 VALUES
     (1, 'Booster Station'),
     (2, 'Pump Station');
 
 -- CODELIST: asset_type_structure_boundary_water_storage_boundary
-INSERT INTO asset_type_structure_boundary_water_storage_boundary (code, description)
+INSERT INTO codelist.asset_type_structure_boundary_water_storage_boundary (code, description)
 VALUES
     (1, 'Hydropneumatic Tank'),
     (2, 'Reservoir'),
@@ -35,18 +35,18 @@ VALUES
     (6, 'Tower');
 
 -- CODELIST: asset_type_structure_boundary_water_supply_boundary
-INSERT INTO asset_type_structure_boundary_water_supply_boundary (code, description)
+INSERT INTO codelist.asset_type_structure_boundary_water_supply_boundary (code, description)
 VALUES
     (1, 'Interconnect'),
     (2, 'Treatment Plant'),
     (3, 'Well');
 
 -- CODELIST: asset_type_structure_line_pipeline_casing
-INSERT INTO asset_type_structure_line_pipeline_casing (code, description)
+INSERT INTO codelist.asset_type_structure_line_pipeline_casing (code, description)
     VALUES (1, 'Casing');
 
 -- CODELIST: asset_type_water_assembly_backflow
-INSERT INTO asset_type_water_assembly_backflow (code, description)
+INSERT INTO codelist.asset_type_water_assembly_backflow (code, description)
 VALUES
     (1, 'Double Check Detector'),
     (2, 'Double Check Valve'),
@@ -54,18 +54,18 @@ VALUES
     (4, 'Reduced Pressure Zone');
 
 -- CODELIST: asset_type_water_device_fire_hydrant
-INSERT INTO asset_type_water_device_fire_hydrant (code, description)
+INSERT INTO codelist.asset_type_water_device_fire_hydrant (code, description)
     VALUES (1, 'Fire Hydrant');
 
 -- CODELIST: asset_type_water_device_flow_valve
-INSERT INTO asset_type_water_device_flow_valve (code, description)
+INSERT INTO codelist.asset_type_water_device_flow_valve (code, description)
 VALUES
     (1, 'Air Gape'),
     (2, 'Altitude'),
     (3, 'Check');
 
 -- CODELIST: asset_type_water_device_flushing_and_blow_off
-INSERT INTO asset_type_water_device_flushing_and_blow_off (code, description)
+INSERT INTO codelist.asset_type_water_device_flushing_and_blow_off (code, description)
 VALUES
     (1, 'Automatic Flushing'),
     (2, 'Blow Off'),
@@ -74,7 +74,7 @@ VALUES
     (5, 'Post Hydrant');
 
 -- CODELIST: asset_type_water_device_pressure_valve
-INSERT INTO asset_type_water_device_pressure_valve (code, description)
+INSERT INTO codelist.asset_type_water_device_pressure_valve (code, description)
 VALUES
     (1, 'Air and Vacuum'),
     (2, 'Air Release'),
@@ -86,14 +86,14 @@ VALUES
     (8, 'Surge');
 
 -- CODELIST: asset_type_water_device_pump
-INSERT INTO asset_type_water_device_pump (code, description)
+INSERT INTO codelist.asset_type_water_device_pump (code, description)
 VALUES
     (1, 'Bosster'),
     (2, 'Chemical'),
     (3, 'Primary');
 
 -- CODELIST: asset_type_water_device_service_connection
-INSERT INTO asset_type_water_device_service_connection (code, description)
+INSERT INTO codelist.asset_type_water_device_service_connection (code, description)
 VALUES
     (1, 'Commercial'),
     (2, 'Fire'),
@@ -102,7 +102,7 @@ VALUES
     (5, 'Residential');
 
 -- CODELIST: asset_type_water_device_service_meter
-INSERT INTO asset_type_water_device_service_meter (code, description)
+INSERT INTO codelist.asset_type_water_device_service_meter (code, description)
 VALUES
     (1, 'Commercial'),
     (2, 'Fire'),
@@ -111,7 +111,7 @@ VALUES
     (5, 'Residential');
 
 -- CODELIST: asset_type_water_device_service_valve
-INSERT INTO asset_type_water_device_service_valve (code, description)
+INSERT INTO codelist.asset_type_water_device_service_valve (code, description)
 VALUES
     (1, 'Blow Off'),
     (2, 'Flap'),
@@ -121,7 +121,7 @@ VALUES
     (6, 'Service');
 
 -- CODELIST: asset_type_water_device_storage
-INSERT INTO asset_type_water_device_storage (code, description)
+INSERT INTO codelist.asset_type_water_device_storage (code, description)
 VALUES
     (1, 'Hydropneumatic Tank'),
     (2, 'Reservoir'),
@@ -131,14 +131,14 @@ VALUES
     (6, 'Tower');
 
 -- CODELIST: asset_type_water_device_supply_welltype
-INSERT INTO asset_type_water_device_supply_welltype (code, description)
+INSERT INTO codelist.asset_type_water_device_supply_welltype (code, description)
 VALUES
     (1, 'Water'),
     (2, 'Monitoring'),
     (3, 'Injection');
 
 -- CODELIST: asset_type_water_device_system_meter
-INSERT INTO asset_type_water_device_system_meter (code, description)
+INSERT INTO codelist.asset_type_water_device_system_meter (code, description)
 VALUES
     (1, 'Bulk'),
     (2, 'DMA'),
@@ -146,7 +146,7 @@ VALUES
     (4, 'Pump Station');
 
 -- CODELIST: asset_type_water_device_system_valve
-INSERT INTO asset_type_water_device_system_valve (code, description)
+INSERT INTO codelist.asset_type_water_device_system_valve (code, description)
 VALUES
     (1, 'Bypass'),
     (2, 'Interconnect'),
@@ -156,7 +156,7 @@ VALUES
     (6, 'System');
 
 -- CODELIST: asset_type_water_junction_fitting
-INSERT INTO asset_type_water_junction_fitting (code, description)
+INSERT INTO codelist.asset_type_water_junction_fitting (code, description)
 VALUES
     (1, 'Clamp'),
     (2, 'Corporation Stop'),
@@ -182,7 +182,7 @@ VALUES
     (22, 'Wye');
 
 -- CODELIST: asset_type_water_line_service
-INSERT INTO asset_type_water_line_service (code, description)
+INSERT INTO codelist.asset_type_water_line_service (code, description)
 VALUES
     (1, 'Air and Vacuum Service'),
     (2, 'Blow Off Service'),
@@ -195,7 +195,7 @@ VALUES
     (9, 'Sampling Service');
 
 -- CODELIST: asset_type_water_line_water_main
-INSERT INTO asset_type_water_line_water_main (code, description)
+INSERT INTO codelist.asset_type_water_line_water_main (code, description)
 VALUES
     (1, 'Distribution Main'),
     (2, 'Drain'),
@@ -204,13 +204,13 @@ VALUES
     (5, 'Transmission Main');
 
 -- CODELIST: fire_hydrant_assignment_type
-INSERT INTO fire_hydrant_assignment_type (code, description)
+INSERT INTO codelist.fire_hydrant_assignment_type (code, description)
 VALUES
     (1, 'Flow Test'),
     (2, 'Flush');
 
 -- CODELIST: lifecycle
-INSERT INTO lifecycle (code, description)
+INSERT INTO codelist.lifecycle (code, description)
 VALUES
     (0, 'Unknown'),
     (1, 'Proposed'),
@@ -224,7 +224,7 @@ VALUES
     (9, 'Out of Service');
 
 -- CODELIST: manufactured_types
-INSERT INTO manufactured_types (code, description)
+INSERT INTO codelist.manufactured_types (code, description)
 VALUES
     (0, 'Unknown'),
     (1, 'Ames Company Inc'),
@@ -240,7 +240,7 @@ VALUES
     (11, 'Other');
 
 -- CODELIST: pipeline_casing_diameter
-INSERT INTO pipeline_casing_diameter (code, description)
+INSERT INTO codelist.pipeline_casing_diameter (code, description)
 VALUES
     (0, 'Unknown'),
     (4, '4'),
@@ -267,26 +267,26 @@ VALUES
     (48, '48');
 
 -- CODELIST: pipeline_casing_fill_type
-INSERT INTO pipeline_casing_fill_type (code, description)
+INSERT INTO codelist.pipeline_casing_fill_type (code, description)
 VALUES
     (1, 'Grout'),
     (2, 'Pea Gravel'),
     (3, 'Sand');
 
 -- CODELIST: pipeline_valve_close_direction
-INSERT INTO pipeline_valve_close_direction (code, description)
+INSERT INTO codelist.pipeline_valve_close_direction (code, description)
 VALUES
     (1, 'Counter Clockwise'),
     (2, 'Clockwise');
 
 -- CODELIST: pipeline_valve_status
-INSERT INTO pipeline_valve_status (code, description)
+INSERT INTO codelist.pipeline_valve_status (code, description)
 VALUES
     (0, 'Closed'),
     (1, 'Open');
 
 -- CODELIST: spatial_confidence
-INSERT INTO spatial_confidence (code, description)
+INSERT INTO codelist.spatial_confidence (code, description)
 VALUES
     (0, 'Unknown'),
     (1, 'High'),
@@ -294,7 +294,7 @@ VALUES
     (3, 'Low');
 
 -- CODELIST: spatial_source
-INSERT INTO spatial_source (code, description)
+INSERT INTO codelist.spatial_source (code, description)
 VALUES
     (0, 'Unknown'),
     (1, 'As-Built'),
@@ -304,7 +304,7 @@ VALUES
     (5, 'Field Sketch');
 
 -- CODELIST: water_diameter
-INSERT INTO water_diameter (code, description)
+INSERT INTO codelist.water_diameter (code, description)
 VALUES
     (15, '1/2"'),
     (20, '3/4"'),
@@ -337,7 +337,7 @@ VALUES
     (1900, '75"');
 
 -- CODELIST: water_fire_hydrant_manufacturer
-INSERT INTO water_fire_hydrant_manufacturer (code, description)
+INSERT INTO codelist.water_fire_hydrant_manufacturer (code, description)
 VALUES
     (0, 'Unknown'),
     (1, 'American Darling'),
@@ -356,14 +356,14 @@ VALUES
     (14, 'Other');
 
 -- CODELIST: water_interconnect_connection_type
-INSERT INTO water_interconnect_connection_type (code, description)
+INSERT INTO codelist.water_interconnect_connection_type (code, description)
 VALUES
     (1, 'Buy'),
     (2, 'Sell'),
     (3, 'Buy or Sell');
 
 -- CODELIST: water_main_material
-INSERT INTO water_main_material (code, description)
+INSERT INTO codelist.water_main_material (code, description)
 VALUES
     (1, 'Asbestos Cement - AC'),
     (2, 'Brick - BR'),
@@ -395,7 +395,7 @@ VALUES
     (28, 'Non-Plastic - NPLA');
 
 -- CODELIST: water_pump_type
-INSERT INTO water_pump_type (code, description)
+INSERT INTO codelist.water_pump_type (code, description)
 VALUES
     (1, 'Axial Flow'),
     (2, 'Centrifugal'),
@@ -405,7 +405,7 @@ VALUES
     (6, 'Turbine');
 
 -- CODELIST: water_service_material
-INSERT INTO water_service_material (code, description)
+INSERT INTO codelist.water_service_material (code, description)
 VALUES
     (1, 'Cast Iron - CAS'),
     (2, 'Copper - COP'),
@@ -414,7 +414,7 @@ VALUES
     (5, 'Lead - LP');
 
 -- CODELIST: water_supply_filtration_type
-INSERT INTO water_supply_filtration_type (code, description)
+INSERT INTO codelist.water_supply_filtration_type (code, description)
 VALUES
     (1, 'Carbon'),
     (2, 'Reverse Osmosis'),
@@ -423,14 +423,14 @@ VALUES
     (5, 'Biological');
 
 -- CODELIST: water_treatment_plant_type
-INSERT INTO water_treatment_plant_type (code, description)
+INSERT INTO codelist.water_treatment_plant_type (code, description)
 VALUES
     (1, 'Goundwater'),
     (2, 'Surface Water'),
     (3, 'Desalination');
 
 -- CODELIST: water_type
-INSERT INTO water_type (code, description)
+INSERT INTO codelist.water_type (code, description)
 VALUES
     (1, 'Potable'),
     (2, 'Irrigation'),
@@ -440,7 +440,7 @@ VALUES
     (6, 'Finished');
 
 -- CODELIST: water_valve_type
-INSERT INTO water_valve_type (code, description)
+INSERT INTO codelist.water_valve_type (code, description)
 VALUES
     (1, 'Ball'),
     (2, 'Butterfly'),
