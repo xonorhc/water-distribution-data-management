@@ -3,14 +3,14 @@ CREATE SEQUENCE IF NOT EXISTS water_system.asset_global_id_seq AS bigint;
 
 CREATE TABLE IF NOT EXISTS water_system.asset (
     -- Globally unique identifier
-    global_id bigint DEFAULT NEXTVAL('asset_global_id_seq'),
+    global_id bigint DEFAULT NEXTVAL('water_system.asset_global_id_seq'),
     -- Unique identifier
     object_id integer,
     asset_id varchar(64),
     asset_type smallint,
     nickname varchar(64),
     -- Current stage
-    lifecycle_status smallint DEFAULT 4,
+    lifecycle_status smallint NOT NULL DEFAULT 4,
     install_date date,
     inservice_date date,
     retired_date date,
@@ -29,8 +29,6 @@ CREATE TABLE IF NOT EXISTS water_system.asset (
     last_edited_user varchar(255),
     last_edited_date timestamp,
     -- Constraints
-    NOT NULL global_id,
-    NOT NULL lifecycle_status,
     PRIMARY KEY (global_id),
     FOREIGN KEY (lifecycle_status) REFERENCES codelist.lifecycle (code),
     FOREIGN KEY (owned_by) REFERENCES codelist.asset_owner (code),
