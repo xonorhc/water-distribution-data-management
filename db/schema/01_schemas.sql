@@ -1,0 +1,4 @@
+CREATE SCHEMA IF NOT EXISTS codelist;
+
+CREATE SCHEMA IF NOT EXISTS water_system;
+
