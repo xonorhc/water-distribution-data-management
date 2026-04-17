@@ -8,7 +8,7 @@ DB_PORT="5436"
 DB_NAME="watersystem"
 DB_USER="postgres"
 
-SCHEMA_DIR="../../db/schema"
+SCHEMA_DIR="../../db/init"
 SEED_DIR="../../db/seeds"
 
 echo "Starting database setup..."

@@ -14,7 +14,7 @@ services:
 
     volumes:
       - ./pgdata_watersystem:/var/lib/postgresql/data
-      - ../../db/schema:/docker-entrypoint-initdb.d
+      - ../../db/init:/docker-entrypoint-initdb.d
 
     logging:
       driver: "json-file"
