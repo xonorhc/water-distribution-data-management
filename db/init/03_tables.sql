@@ -24,9 +24,9 @@ CREATE TABLE IF NOT EXISTS water_system.asset (
     longitude numeric(9, 7),
     altitude numeric(6, 3),
     -- Tracks edited the record
-    created_user varchar(255),
+    created_user varchar(64),
     created_date timestamp,
-    last_edited_user varchar(255),
+    last_edited_user varchar(64),
     last_edited_date timestamp,
     -- Constraints
     PRIMARY KEY (global_id),
