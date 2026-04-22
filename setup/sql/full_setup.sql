@@ -1,7 +1,5 @@
 -- Auto-generated SQL setup file
--- Generated at Thu Apr 16 10:07:14 PM -04 2026
-
-
+-- Generated at Wed Apr 22 09:19:29 AM -04 2026
 -- FILE: ../../db/init/00_extensions.sql
 CREATE EXTENSION IF NOT EXISTS postgis;
 
@@ -310,14 +308,11 @@ CREATE TABLE IF NOT EXISTS types.water_valve_type (
 CREATE SEQUENCE IF NOT EXISTS water_system.asset_global_id_seq AS bigint;
 
 CREATE TABLE IF NOT EXISTS water_system.asset (
-    -- Globally unique identifier
-    global_id bigint DEFAULT NEXTVAL('water_system.asset_global_id_seq'),
-    -- Unique identifier
+    global_id bigint DEFAULT nextval('water_system.asset_global_id_seq'),
     object_id integer,
     asset_id varchar(64),
     asset_type smallint,
     nickname varchar(64),
-    -- Current stage
     lifecycle_status smallint NOT NULL DEFAULT 4,
     install_date date,
     inservice_date date,
@@ -325,18 +320,15 @@ CREATE TABLE IF NOT EXISTS water_system.asset (
     owned_by smallint DEFAULT 1,
     main_by smallint DEFAULT 1,
     notes varchar(2000),
-    -- Spatial data
     spatial_source smallint,
     spatial_confidence smallint,
     latitude numeric(9, 7),
     longitude numeric(9, 7),
     altitude numeric(6, 3),
-    -- Tracks edited the record
-    created_user varchar(255),
-    created_date timestamp,
-    last_edited_user varchar(255),
-    last_edited_date timestamp,
-    -- Constraints
+    created_user varchar(64),
+    created_date timestamptz,
+    last_edited_user varchar(64),
+    last_edited_date timestamptz,
     PRIMARY KEY (global_id),
     FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
     FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
@@ -349,16 +341,8 @@ ALTER SEQUENCE water_system.asset_global_id_seq OWNED BY water_system.asset.glob
 
 -- TABLE: punctual_asset
 CREATE TABLE IF NOT EXISTS water_system.punctual_asset (
-    -- New properties
-    shape GEOMETRY(POINTZ, 4326),
-    symbol_rotation smallint CHECK (symbol_rotation BETWEEN 0 AND 360) DEFAULT 0,
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    shape geometry(POINTZ, 4326),
+    symbol_rotation smallint CHECK (symbol_rotation BETWEEN 0 AND 360) DEFAULT 0
 )
 INHERITS (
     water_system.asset
@@ -366,16 +350,8 @@ INHERITS (
 
 -- TABLE: linear_asset
 CREATE TABLE IF NOT EXISTS water_system.linear_asset (
-    -- New properties
-    shape GEOMETRY(LINESTRINGZ, 4326),
-    shape_length numeric GENERATED ALWAYS AS ((ST_LENGTH (shape))::numeric(8, 2)) STORED,
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    shape geometry(LINESTRINGZ, 4326),
+    shape_length numeric GENERATED ALWAYS AS ((ST_LENGTH (shape))::numeric(8, 2)) STORED
 )
 INHERITS (
     water_system.asset
@@ -383,17 +359,9 @@ INHERITS (
 
 -- TABLE: polygonal_asset
 CREATE TABLE IF NOT EXISTS water_system.polygonal_asset (
-    -- New properties
-    shape GEOMETRY(POLYGONZ, 4326),
+    shape geometry(POLYGONZ, 4326),
     shape_area numeric GENERATED ALWAYS AS ((ST_AREA (shape))::numeric(8, 2)) STORED,
-    shape_length numeric GENERATED ALWAYS AS ((ST_PERIMETER (shape))::numeric(8, 2)) STORED,
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    shape_length numeric GENERATED ALWAYS AS ((ST_PERIMETER (shape))::numeric(8, 2)) STORED
 )
 INHERITS (
     water_system.asset
@@ -401,22 +369,13 @@ INHERITS (
 
 -- TABLE: backflow
 CREATE TABLE IF NOT EXISTS water_system.backflow (
-    -- New properties
+    object_id serial,
+    asset_id varchar(64) DEFAULT 'Backflow',
     manufacturer smallint,
     design_model bigint,
     is_locked boolean,
     FOREIGN KEY (manufacturer) REFERENCES types.manufactured_types (code),
-    -- Polymorphism
-    object_id serial,
-    asset_id varchar(64) DEFAULT 'Backflow',
-    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_assembly_backflow (code),
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_assembly_backflow (code)
 )
 INHERITS (
     water_system.punctual_asset
@@ -424,7 +383,8 @@ INHERITS (
 
 -- TABLE: fire_hydrant
 CREATE TABLE IF NOT EXISTS water_system.fire_hydrant (
-    -- New properties
+    object_id serial,
+    asset_id varchar(64) DEFAULT 'Fire Hydrant',
     manufacturer bigint,
     design_model bigint,
     diameter smallint CHECK (diameter BETWEEN 100 AND 250),
@@ -444,17 +404,7 @@ CREATE TABLE IF NOT EXISTS water_system.fire_hydrant (
     FOREIGN KEY (secondary_diameter) REFERENCES types.water_diameter (code),
     FOREIGN KEY (assignment_type) REFERENCES types.fire_hydrant_assignment_type (code),
     FOREIGN KEY (adoption_status) REFERENCES types.adoption_status (code),
-    -- Polymorphism
-    object_id serial,
-    asset_id varchar(64) DEFAULT 'Fire Hydrant',
-    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_device_fire_hydrant (code),
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_device_fire_hydrant (code)
 )
 INHERITS (
     water_system.punctual_asset
@@ -462,22 +412,13 @@ INHERITS (
 
 -- TABLE: fitting
 CREATE TABLE IF NOT EXISTS water_system.fitting (
-    -- New properties
+    object_id serial,
+    asset_id varchar(64) DEFAULT 'Fitting',
     diameter smallint CHECK (diameter BETWEEN 15 AND 1200),
     secondary_diameter smallint CHECK (secondary_diameter BETWEEN 15 AND 1200),
     FOREIGN KEY (diameter) REFERENCES types.water_diameter (code),
     FOREIGN KEY (secondary_diameter) REFERENCES types.water_diameter (code),
-    -- Polymorphism
-    object_id serial,
-    asset_id varchar(64) DEFAULT 'Fitting',
-    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_junction_fitting (code),
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_junction_fitting (code)
 )
 INHERITS (
     water_system.punctual_asset
@@ -485,24 +426,15 @@ INHERITS (
 
 -- TABLE: flow_valve
 CREATE TABLE IF NOT EXISTS water_system.flow_valve (
-    -- New properties
+    object_id serial,
+    asset_id varchar(64) DEFAULT 'Flow Valve',
     manufacturer smallint,
     design_model bigint,
     diameter smallint CHECK (diameter BETWEEN 15 AND 1900),
     last_maint date,
     FOREIGN KEY (manufacturer) REFERENCES types.manufactured_types (code),
     FOREIGN KEY (diameter) REFERENCES types.water_diameter (code),
-    -- Polymorphism
-    object_id serial,
-    asset_id varchar(64) DEFAULT 'Flow Valve',
-    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_device_flow_valve (code),
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_device_flow_valve (code)
 )
 INHERITS (
     water_system.punctual_asset
@@ -510,22 +442,13 @@ INHERITS (
 
 -- TABLE: flushing_and_blow_off
 CREATE TABLE IF NOT EXISTS water_system.flushing_and_blow_off (
-    -- New properties
+    object_id serial,
+    asset_id varchar(64) DEFAULT 'Flushing and Blow Off',
     manufacturer smallint,
     design_model bigint,
     last_maint date,
     FOREIGN KEY (manufacturer) REFERENCES types.manufactured_types (code),
-    -- Polymorphism
-    object_id serial,
-    asset_id varchar(64) DEFAULT 'Flushing and Blow Off',
-    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_device_flushing_and_blow_off (code),
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_device_flushing_and_blow_off (code)
 )
 INHERITS (
     water_system.punctual_asset
@@ -533,22 +456,13 @@ INHERITS (
 
 -- TABLE: interconnect
 CREATE TABLE IF NOT EXISTS water_system.interconnect (
-    -- New properties
+    object_id serial,
+    asset_id varchar(64) DEFAULT 'Interconnect',
     last_maint date,
     permitted_flow numeric,
     avaible_flow numeric,
     emergency boolean,
-    -- Polymorphism
-    object_id serial,
-    asset_id varchar(64) DEFAULT 'Interconnect',
-    FOREIGN KEY (asset_type) REFERENCES types.water_interconnect_connection_type (code),
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    FOREIGN KEY (asset_type) REFERENCES types.water_interconnect_connection_type (code)
 )
 INHERITS (
     water_system.punctual_asset
@@ -556,23 +470,14 @@ INHERITS (
 
 -- TABLE: pipe_casing
 CREATE TABLE IF NOT EXISTS water_system.pipe_casing (
-    -- New properties
+    object_id serial,
+    asset_id varchar(64) DEFAULT 'Pipe Casing',
     fill_type smallint,
     diameter smallint,
     measured_length numeric(8, 2) CHECK (measured_length > 0),
     FOREIGN KEY (diameter) REFERENCES types.pipeline_casing_diameter (code),
     FOREIGN KEY (fill_type) REFERENCES types.pipeline_casing_fill_type (code),
-    -- Polymorphism
-    object_id serial,
-    asset_id varchar(64) DEFAULT 'Pipe Casing',
-    FOREIGN KEY (asset_type) REFERENCES types.asset_type_structure_line_pipeline_casing (code),
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    FOREIGN KEY (asset_type) REFERENCES types.asset_type_structure_line_pipeline_casing (code)
 )
 INHERITS (
     water_system.linear_asset
@@ -580,7 +485,8 @@ INHERITS (
 
 -- TABLE: pressure_valve
 CREATE TABLE IF NOT EXISTS water_system.pressure_valve (
-    -- New properties
+    object_id serial,
+    asset_id varchar(64) DEFAULT 'Pressure Valve',
     manufacturer smallint,
     design_model bigint,
     diameter smallint CHECK (diameter BETWEEN 15 AND 1900),
@@ -588,17 +494,7 @@ CREATE TABLE IF NOT EXISTS water_system.pressure_valve (
     last_maint date,
     FOREIGN KEY (manufacturer) REFERENCES types.manufactured_types (code),
     FOREIGN KEY (diameter) REFERENCES types.water_diameter (code),
-    -- Polymorphism
-    object_id serial,
-    asset_id varchar(64) DEFAULT 'Pressure Valve',
-    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_device_pressure_valve (code),
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_device_pressure_valve (code)
 )
 INHERITS (
     water_system.punctual_asset
@@ -606,7 +502,8 @@ INHERITS (
 
 -- TABLE: pump
 CREATE TABLE IF NOT EXISTS water_system.pump (
-    -- New properties
+    object_id serial,
+    asset_id varchar(64) DEFAULT 'Pump',
     manufacturer smallint,
     design_model bigint,
     last_maint date,
@@ -620,17 +517,7 @@ CREATE TABLE IF NOT EXISTS water_system.pump (
     FOREIGN KEY (diameter) REFERENCES types.water_diameter (code),
     FOREIGN KEY (secondary_diameter) REFERENCES types.water_diameter (code),
     FOREIGN KEY (design_type) REFERENCES types.water_pump_type (code),
-    -- Polymorphism
-    object_id serial,
-    asset_id varchar(64) DEFAULT 'Pump',
-    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_device_pump (code),
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_device_pump (code)
 )
 INHERITS (
     water_system.punctual_asset
@@ -638,19 +525,10 @@ INHERITS (
 
 -- TABLE: sample_station
 CREATE TABLE IF NOT EXISTS water_system.sample_station (
-    -- New properties
-    last_maint date,
-    station_location varchar(255),
-    -- Polymorphism
     object_id serial,
     asset_id varchar(64) DEFAULT 'Sample Station',
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    last_maint date,
+    station_location varchar(255)
 )
 INHERITS (
     water_system.punctual_asset
@@ -658,7 +536,8 @@ INHERITS (
 
 -- TABLE: service
 CREATE TABLE IF NOT EXISTS water_system.service (
-    -- New properties
+    object_id serial,
+    asset_id varchar(64) DEFAULT 'Service',
     design_type smallint,
     material smallint,
     diameter smallint CHECK (diameter BETWEEN 15 AND 250),
@@ -667,17 +546,7 @@ CREATE TABLE IF NOT EXISTS water_system.service (
     FOREIGN KEY (diameter) REFERENCES types.water_diameter (code),
     FOREIGN KEY (material) REFERENCES types.water_service_material (code),
     FOREIGN KEY (design_type) REFERENCES types.water_type (code),
-    -- Polymorphism
-    object_id serial,
-    asset_id varchar(64) DEFAULT 'Service',
-    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_line_service (code),
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_line_service (code)
 )
 INHERITS (
     water_system.linear_asset
@@ -685,22 +554,13 @@ INHERITS (
 
 -- TABLE: service_connection
 CREATE TABLE IF NOT EXISTS water_system.service_connection (
-    -- New properties
+    object_id serial,
+    asset_id varchar(64) DEFAULT 'Service Connection',
     last_maint date,
     account_id varchar(50),
     critical boolean DEFAULT FALSE,
     metered boolean DEFAULT FALSE,
-    -- Polymorphism
-    object_id serial,
-    asset_id varchar(64) DEFAULT 'Service Connection',
-    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_device_service_connection (code),
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_device_service_connection (code)
 )
 INHERITS (
     water_system.punctual_asset
@@ -708,7 +568,8 @@ INHERITS (
 
 -- TABLE: service_meter
 CREATE TABLE IF NOT EXISTS water_system.service_meter (
-    -- New properties
+    object_id serial,
+    asset_id varchar(64) DEFAULT 'Service Meter',
     manufacturer smallint,
     design_model bigint,
     last_maint date,
@@ -716,17 +577,7 @@ CREATE TABLE IF NOT EXISTS water_system.service_meter (
     account_id varchar(50),
     FOREIGN KEY (manufacturer) REFERENCES types.manufactured_types (code),
     FOREIGN KEY (diameter) REFERENCES types.water_diameter (code),
-    -- Polymorphism
-    object_id serial,
-    asset_id varchar(64) DEFAULT 'Service Meter',
-    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_device_service_meter (code),
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_device_service_meter (code)
 )
 INHERITS (
     water_system.punctual_asset
@@ -734,16 +585,7 @@ INHERITS (
 
 -- TABLE: service_territory
 CREATE TABLE IF NOT EXISTS water_system.service_territory (
-    -- New properties
-    -- Polymorphism
-    object_id serial,
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    object_id serial
 )
 INHERITS (
     water_system.polygonal_asset
@@ -751,7 +593,8 @@ INHERITS (
 
 -- TABLE: service_valve
 CREATE TABLE IF NOT EXISTS water_system.service_valve (
-    -- New properties
+    object_id serial,
+    asset_id varchar(64) DEFAULT 'Service Valve',
     manufacturer smallint,
     design_model bigint,
     last_maint date,
@@ -767,17 +610,7 @@ CREATE TABLE IF NOT EXISTS water_system.service_valve (
     FOREIGN KEY (design_type) REFERENCES types.water_valve_type (code),
     FOREIGN KEY (valve_status) REFERENCES types.pipeline_valve_status (code),
     FOREIGN KEY (clockwise_to_close) REFERENCES types.pipeline_valve_close_direction (code),
-    -- Polymorphism
-    object_id serial,
-    asset_id varchar(64) DEFAULT 'Service Valve',
-    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_device_service_valve (code),
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_device_service_valve (code)
 )
 INHERITS (
     water_system.punctual_asset
@@ -785,22 +618,13 @@ INHERITS (
 
 -- TABLE: storage
 CREATE TABLE IF NOT EXISTS water_system.storage (
-    -- New properties
+    object_id serial,
+    asset_id varchar(64) DEFAULT 'Storage',
     last_maint date,
     height numeric,
     width numeric,
     volume numeric,
-    -- Polymorphism
-    object_id serial,
-    asset_id varchar(64) DEFAULT 'Storage',
-    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_device_storage (code),
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_device_storage (code)
 )
 INHERITS (
     water_system.punctual_asset
@@ -808,7 +632,8 @@ INHERITS (
 
 -- TABLE: system_meter
 CREATE TABLE IF NOT EXISTS water_system.system_meter (
-    -- New properties
+    object_id serial,
+    asset_id varchar(64) DEFAULT 'System Meter',
     manufacturer smallint,
     design_model bigint,
     last_maint date,
@@ -816,17 +641,7 @@ CREATE TABLE IF NOT EXISTS water_system.system_meter (
     account_id varchar(50),
     FOREIGN KEY (manufacturer) REFERENCES types.manufactured_types (code),
     FOREIGN KEY (diameter) REFERENCES types.water_diameter (code),
-    -- Polymorphism
-    object_id serial,
-    asset_id varchar(64) DEFAULT 'System Meter',
-    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_device_system_meter (code),
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_device_system_meter (code)
 )
 INHERITS (
     water_system.punctual_asset
@@ -834,7 +649,8 @@ INHERITS (
 
 -- TABLE: system_valve
 CREATE TABLE IF NOT EXISTS water_system.system_valve (
-    -- New properties
+    object_id serial,
+    asset_id varchar(64) DEFAULT 'System Valve',
     manufacturer smallint,
     design_model bigint,
     last_maint date,
@@ -850,17 +666,7 @@ CREATE TABLE IF NOT EXISTS water_system.system_valve (
     FOREIGN KEY (design_type) REFERENCES types.water_valve_type (code),
     FOREIGN KEY (valve_status) REFERENCES types.pipeline_valve_status (code),
     FOREIGN KEY (clockwise_to_close) REFERENCES types.pipeline_valve_close_direction (code),
-    -- Polymorphism
-    object_id serial,
-    asset_id varchar(64) DEFAULT 'System Valve',
-    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_device_system_valve (code),
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_device_system_valve (code)
 )
 INHERITS (
     water_system.punctual_asset
@@ -868,7 +674,8 @@ INHERITS (
 
 -- TABLE: well
 CREATE TABLE IF NOT EXISTS water_system.well (
-    -- New properties
+    object_id serial,
+    asset_id varchar(64) DEFAULT 'Well',
     last_maint date,
     filtration_type smallint,
     bore_depth numeric,
@@ -876,17 +683,7 @@ CREATE TABLE IF NOT EXISTS water_system.well (
     permitted_flow numeric,
     available_flow numeric,
     FOREIGN KEY (filtration_type) REFERENCES types.water_supply_filtration_type (code),
-    -- Polymorphism
-    object_id serial,
-    asset_id varchar(64) DEFAULT 'Well',
-    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_device_supply_welltype (code),
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_device_supply_welltype (code)
 )
 INHERITS (
     water_system.punctual_asset
@@ -894,18 +691,9 @@ INHERITS (
 
 -- TABLE: water_supply_boundary
 CREATE TABLE IF NOT EXISTS water_system.water_supply_boundary (
-    -- New properties
-    -- Polymorphism
     object_id serial,
     asset_id varchar(64) DEFAULT 'Water Supply Boundary',
-    FOREIGN KEY (asset_type) REFERENCES types.asset_type_structure_boundary_water_supply_boundary (code),
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    FOREIGN KEY (asset_type) REFERENCES types.asset_type_structure_boundary_water_supply_boundary (code)
 )
 INHERITS (
     water_system.polygonal_asset
@@ -913,18 +701,9 @@ INHERITS (
 
 -- TABLE: water_storage_boundary
 CREATE TABLE IF NOT EXISTS water_system.water_storage_boundary (
-    -- New properties
-    -- Polymorphism
     object_id serial,
     asset_id varchar(64) DEFAULT 'Water Storage Boundary',
-    FOREIGN KEY (asset_type) REFERENCES types.asset_type_structure_boundary_water_storage_boundary (code),
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    FOREIGN KEY (asset_type) REFERENCES types.asset_type_structure_boundary_water_storage_boundary (code)
 )
 INHERITS (
     water_system.polygonal_asset
@@ -932,18 +711,9 @@ INHERITS (
 
 -- TABLE: water_pump_station_boundary
 CREATE TABLE IF NOT EXISTS water_system.water_pump_station_boundary (
-    -- New properties
-    -- Polymorphism
     object_id serial,
     asset_id varchar(64) DEFAULT 'Water Pump Station Boundary',
-    FOREIGN KEY (asset_type) REFERENCES types.asset_type_structure_boundary_water_pump_station_boundary (code),
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    FOREIGN KEY (asset_type) REFERENCES types.asset_type_structure_boundary_water_pump_station_boundary (code)
 )
 INHERITS (
     water_system.polygonal_asset
@@ -951,24 +721,15 @@ INHERITS (
 
 -- TABLE: treatment_plant
 CREATE TABLE IF NOT EXISTS water_system.treatment_plant (
-    -- New properties
+    object_id serial,
+    asset_id varchar(64) DEFAULT 'Treatment Plant',
     last_maint date,
     permitted_capacity numeric,
     rated_capacity numeric,
     average_daily_flow numeric,
     filtration_type smallint,
     FOREIGN KEY (filtration_type) REFERENCES types.water_supply_filtration_type (code),
-    -- Polymorphism
-    object_id serial,
-    asset_id varchar(64) DEFAULT 'Treatment Plant',
-    FOREIGN KEY (asset_type) REFERENCES types.water_treatment_plant_type (code),
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    FOREIGN KEY (asset_type) REFERENCES types.water_treatment_plant_type (code)
 )
 INHERITS (
     water_system.punctual_asset
@@ -976,7 +737,8 @@ INHERITS (
 
 -- TABLE: water_main
 CREATE TABLE IF NOT EXISTS water_system.water_main (
-    -- New properties
+    object_id serial,
+    asset_id varchar(64) DEFAULT 'Water Main',
     design_type smallint,
     material smallint,
     diameter smallint CHECK (diameter BETWEEN 100 AND 1900),
@@ -985,17 +747,7 @@ CREATE TABLE IF NOT EXISTS water_system.water_main (
     FOREIGN KEY (diameter) REFERENCES types.water_diameter (code),
     FOREIGN KEY (material) REFERENCES types.water_main_material (code),
     FOREIGN KEY (design_type) REFERENCES types.water_type (code),
-    -- Polymorphism
-    object_id serial,
-    asset_id varchar(64) DEFAULT 'Water Main',
-    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_line_water_main (code),
-    -- NOTE: Fixed limitation of the inheritance feature
-    PRIMARY KEY (global_id),
-    FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
-    FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
-    FOREIGN KEY (main_by) REFERENCES types.asset_manager (code),
-    FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code),
-    FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code)
+    FOREIGN KEY (asset_type) REFERENCES types.asset_type_water_line_water_main (code)
 )
 INHERITS (
     water_system.linear_asset
@@ -1105,8 +857,130 @@ CREATE INDEX ON water_system.water_main USING gist (shape);
 
 CREATE INDEX ON water_system.water_main (shape_length);
 
--- FILE: ../../db/init/05_functions.sql
--- FILE: ../../db/init/06_seeds.sql
+-- FILE: ../../db/init/05_constraints.sql
+-- NOTE: Fixed limitation of the inheritance feature
+DO $$
+DECLARE
+    mytables record;
+BEGIN
+    FOR mytables IN
+    SELECT
+        table_schema,
+        table_name
+    FROM
+        information_schema.tables
+    WHERE
+        table_schema = 'water_system'
+        AND table_name NOT LIKE ('asset')
+            LOOP
+                EXECUTE format('ALTER TABLE IF EXISTS %2$I.%1$I ADD PRIMARY KEY (global_id);', mytables.table_name, mytables.table_schema);
+                EXECUTE format('ALTER TABLE IF EXISTS %2$I.%1$I ADD FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code);', mytables.table_name, mytables.table_schema);
+                EXECUTE format('ALTER TABLE IF EXISTS %2$I.%1$I ADD FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code);', mytables.table_name, mytables.table_schema);
+                EXECUTE format('ALTER TABLE IF EXISTS %2$I.%1$I ADD FOREIGN KEY (main_by) REFERENCES types.asset_manager (code);', mytables.table_name, mytables.table_schema);
+                EXECUTE format('ALTER TABLE IF EXISTS %2$I.%1$I ADD FOREIGN KEY (spatial_source) REFERENCES types.spatial_source (code);', mytables.table_name, mytables.table_schema);
+                EXECUTE format('ALTER TABLE IF EXISTS %2$I.%1$I ADD FOREIGN KEY (spatial_confidence) REFERENCES types.spatial_confidence (code);', mytables.table_name, mytables.table_schema);
+            END LOOP;
+END
+$$;
+
+-- FILE: ../../db/init/06_functions.sql
+-- FUNCTION: created_user
+CREATE OR REPLACE FUNCTION water_system.created_user ()
+    RETURNS TRIGGER
+    LANGUAGE 'plpgsql'
+    COST 100 VOLATILE NOT LEAKPROOF
+    AS $body$
+BEGIN
+    NEW.created_user := CURRENT_USER;
+    NEW.created_date := CURRENT_TIMESTAMP;
+    RETURN new;
+END;
+$body$;
+
+-- FUNCTION: last_edited_user
+CREATE OR REPLACE FUNCTION water_system.last_edited_user ()
+    RETURNS TRIGGER
+    LANGUAGE 'plpgsql'
+    COST 100 VOLATILE NOT LEAKPROOF
+    AS $body$
+BEGIN
+    NEW.created_user := CURRENT_USER;
+    NEW.created_date := CURRENT_TIMESTAMP;
+    RETURN new;
+END;
+$body$;
+
+-- FILE: ../../db/init/07_triggers.sql
+-- TABLE: asset
+CREATE OR REPLACE TRIGGER created_user
+    BEFORE INSERT ON water_system.asset
+    FOR EACH ROW
+    EXECUTE FUNCTION water_system.created_user ();
+
+CREATE OR REPLACE TRIGGER last_edited_user
+    BEFORE UPDATE ON water_system.asset
+    FOR EACH ROW
+    EXECUTE FUNCTION water_system.last_edited_user ();
+
+-- PERF: Create trigger created_user on all tables in water_system
+DO $$
+DECLARE
+    mytables record;
+BEGIN
+    FOR mytables IN
+    SELECT
+        table_schema,
+        table_name
+    FROM
+        information_schema.tables
+    WHERE
+        table_schema = 'water_system'
+        AND table_name NOT LIKE ('asset')
+            LOOP
+                EXECUTE format('ALTER TABLE %2$I.%1$I
+                        ADD COLUMN IF NOT EXISTS created_date timestamptz,
+                        ADD COLUMN IF NOT EXISTS created_user varchar(64);
+                ', mytables.table_name, mytables.table_schema);
+
+                EXECUTE format('CREATE OR REPLACE TRIGGER created_user
+                        BEFORE INSERT ON %2$I.%1$I
+                        FOR EACH ROW
+                        EXECUTE FUNCTION %2$I.created_user ();
+                ', mytables.table_name, mytables.table_schema);
+            END LOOP;
+END
+$$;
+
+-- PERF: Create trigger last_edited_user on all tables in water_system
+DO $$
+DECLARE
+    mytables record;
+BEGIN
+    FOR mytables IN
+    SELECT
+        table_schema,
+        table_name
+    FROM
+        information_schema.tables
+    WHERE
+        table_schema = 'water_system'
+        AND table_name NOT LIKE ('asset')
+            LOOP
+                EXECUTE format('ALTER TABLE %2$I.%1$I
+                        ADD COLUMN IF NOT EXISTS last_edited_date timestamptz,
+                        ADD COLUMN IF NOT EXISTS last_edited_user varchar(20);
+                ', mytables.table_name, mytables.table_schema);
+
+                EXECUTE format('CREATE OR REPLACE TRIGGER last_edited_user
+                        BEFORE UPDATE ON %2$I.%1$I
+                        FOR EACH ROW
+                        EXECUTE FUNCTION %2$I.last_edited_user ();
+                ', mytables.table_name, mytables.table_schema);
+            END LOOP;
+END
+$$;
+
+-- FILE: ../../db/init/08_seeds.sql
 -- TYPE: adoption_status
 INSERT INTO types.adoption_status (code, description)
 VALUES
@@ -1556,4 +1430,3 @@ VALUES
     (3, 'Cone'),
     (4, 'Gate'),
     (5, 'Plug');
-

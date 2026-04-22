@@ -2,7 +2,7 @@
 CREATE SEQUENCE IF NOT EXISTS water_system.asset_global_id_seq AS bigint;
 
 CREATE TABLE IF NOT EXISTS water_system.asset (
-    global_id bigint DEFAULT NEXTVAL('water_system.asset_global_id_seq'),
+    global_id bigint DEFAULT nextval('water_system.asset_global_id_seq'),
     object_id integer,
     asset_id varchar(64),
     asset_type smallint,
@@ -20,9 +20,9 @@ CREATE TABLE IF NOT EXISTS water_system.asset (
     longitude numeric(9, 7),
     altitude numeric(6, 3),
     created_user varchar(64),
-    created_date timestamp,
+    created_date timestamptz,
     last_edited_user varchar(64),
-    last_edited_date timestamp,
+    last_edited_date timestamptz,
     PRIMARY KEY (global_id),
     FOREIGN KEY (lifecycle_status) REFERENCES types.lifecycle (code),
     FOREIGN KEY (owned_by) REFERENCES types.asset_owner (code),
@@ -35,7 +35,7 @@ ALTER SEQUENCE water_system.asset_global_id_seq OWNED BY water_system.asset.glob
 
 -- TABLE: punctual_asset
 CREATE TABLE IF NOT EXISTS water_system.punctual_asset (
-    shape GEOMETRY(POINTZ, 4326),
+    shape geometry(POINTZ, 4326),
     symbol_rotation smallint CHECK (symbol_rotation BETWEEN 0 AND 360) DEFAULT 0
 )
 INHERITS (
@@ -44,7 +44,7 @@ INHERITS (
 
 -- TABLE: linear_asset
 CREATE TABLE IF NOT EXISTS water_system.linear_asset (
-    shape GEOMETRY(LINESTRINGZ, 4326),
+    shape geometry(LINESTRINGZ, 4326),
     shape_length numeric GENERATED ALWAYS AS ((ST_LENGTH (shape))::numeric(8, 2)) STORED
 )
 INHERITS (
@@ -53,7 +53,7 @@ INHERITS (
 
 -- TABLE: polygonal_asset
 CREATE TABLE IF NOT EXISTS water_system.polygonal_asset (
-    shape GEOMETRY(POLYGONZ, 4326),
+    shape geometry(POLYGONZ, 4326),
     shape_area numeric GENERATED ALWAYS AS ((ST_AREA (shape))::numeric(8, 2)) STORED,
     shape_length numeric GENERATED ALWAYS AS ((ST_PERIMETER (shape))::numeric(8, 2)) STORED
 )
@@ -446,4 +446,3 @@ CREATE TABLE IF NOT EXISTS water_system.water_main (
 INHERITS (
     water_system.linear_asset
 );
-
