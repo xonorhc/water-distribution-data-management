@@ -1,0 +1,20 @@
+-- TABLE: service_meter
+CREATE TABLE IF NOT EXISTS watersystem.service_meter (
+    object_id serial,
+    asset_id varchar(64) DEFAULT 'Service Meter',
+    account_id varchar(64),
+    diameter smallint DEFAULT 0,
+    manufacturer smallint,
+    design_model bigint,
+    last_maint date,
+    FOREIGN KEY (asset_type) REFERENCES domains.asset_type_water_device_service_meter (code),
+    FOREIGN KEY (diameter) REFERENCES domains.water_meter_diameter (code),
+    FOREIGN KEY (manufacturer) REFERENCES domains.manufactured_types (code)
+)
+INHERITS (
+    watersystem.punctual_asset
+);
+
+-- PostGIS index
+CREATE INDEX ON watersystem.service_meter USING gist (shape);
+
