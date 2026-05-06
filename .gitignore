@@ -1,2 +1,3 @@
 pgdata_*/
 *.bak
+.env

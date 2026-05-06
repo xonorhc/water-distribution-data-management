@@ -4,13 +4,16 @@ services:
     container_name: postgis_watersystem
     restart: always
 
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=secret_watersystem
-      - POSTGRES_DB=watersystem
+    shm_size: 256mb
 
     ports:
-      - "5433:5432"
+      - "${DB_PORT:-5432}:5432"
+
+    environment:
+      - POSTGRES_USER=${DB_USER:-postgres}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-secret}
+      - POSTGRES_DB=${DB_NAME:-postgis}
+      - POSTGRES_HOST_AUTH_METHOD=${DB_AUTH_METHOD:-md5}
 
     volumes:
       - ./pgdata_watersystem:/var/lib/postgresql/data
@@ -20,3 +23,12 @@ services:
       driver: "json-file"
       options:
         max-size: "10mb"
+
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 1024M
+        reservations:
+          cpus: "0.25"
+          memory: 256M
