@@ -1,7 +1,7 @@
 -- TABLE: water_storage_boundary
 CREATE TABLE IF NOT EXISTS watersystem.water_storage_boundary (
     object_id serial,
-    asset_id varchar(64) DEFAULT 'Water Storage Boundary',
+    asset_id varchar(64) GENERATED ALWAYS AS ('WS-STORAGE-BOUDARY-' || LPAD(object_id::text, 5, '0')) STORED,
     FOREIGN KEY (asset_type) REFERENCES domains.asset_type_structure_boundary_water_storage_boundary (code)
 )
 INHERITS (

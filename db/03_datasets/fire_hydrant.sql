@@ -1,7 +1,7 @@
 -- TABLE: fire_hydrant
 CREATE TABLE IF NOT EXISTS watersystem.fire_hydrant (
     object_id serial,
-    asset_id varchar(64) DEFAULT 'Fire Hydrant',
+    asset_id varchar(64) GENERATED ALWAYS AS ('WS-FIRE-HYDRANT-' || LPAD(object_id::text, 5, '0')) STORED,
     diameter smallint DEFAULT 0,
     nozzle_diameter smallint DEFAULT 0,
     manufacturer bigint,

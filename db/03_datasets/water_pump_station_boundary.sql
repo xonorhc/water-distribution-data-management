@@ -1,7 +1,7 @@
 -- TABLE: water_pump_station_boundary
 CREATE TABLE IF NOT EXISTS watersystem.water_pump_station_boundary (
     object_id serial,
-    asset_id varchar(64) DEFAULT 'Water Pump Station Boundary',
+    asset_id varchar(64) GENERATED ALWAYS AS ('WS-PUMP-STATION-BOUNDARY-' || LPAD(object_id::text, 5, '0')) STORED,
     FOREIGN KEY (asset_type) REFERENCES domains.asset_type_structure_boundary_water_pump_station_boundary (code)
 )
 INHERITS (

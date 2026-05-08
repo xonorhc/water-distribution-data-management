@@ -1,7 +1,7 @@
 -- TABLE: service_meter
 CREATE TABLE IF NOT EXISTS watersystem.service_meter (
     object_id serial,
-    asset_id varchar(64) DEFAULT 'Service Meter',
+    asset_id varchar(64) GENERATED ALWAYS AS ('WS-SERVICE-METER-' || LPAD(object_id::text, 5, '0')) STORED,
     account_id varchar(64),
     diameter smallint DEFAULT 0,
     manufacturer smallint,

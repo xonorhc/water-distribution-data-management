@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS watersystem.asset (
     spatial_source smallint DEFAULT 0,
     spatial_confidence smallint DEFAULT 0,
     latitude numeric(9, 7),
-    longitude numeric(9, 7),
+    longitude numeric(10, 7),
     altitude numeric(6, 3),
     created_user varchar(64),
     created_date timestamptz,

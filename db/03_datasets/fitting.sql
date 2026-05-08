@@ -1,7 +1,7 @@
 -- TABLE: fitting
 CREATE TABLE IF NOT EXISTS watersystem.fitting (
     object_id serial,
-    asset_id varchar(64) DEFAULT 'Fitting',
+    asset_id varchar(64) GENERATED ALWAYS AS ('WS-FITTING-' || LPAD(object_id::text, 5, '0')) STORED,
     diameter smallint DEFAULT 0,
     secondary_diameter smallint DEFAULT 0,
     FOREIGN KEY (asset_type) REFERENCES domains.asset_type_water_junction_fitting (code),

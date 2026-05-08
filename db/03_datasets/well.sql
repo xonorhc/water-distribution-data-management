@@ -1,7 +1,7 @@
 -- TABLE: well
 CREATE TABLE IF NOT EXISTS watersystem.well (
     object_id serial,
-    asset_id varchar(64) DEFAULT 'Well',
+    asset_id varchar(64) GENERATED ALWAYS AS ('WS-WELL-' || LPAD(object_id::text, 5, '0')) STORED,
     filtration_type smallint,
     bore_depth numeric,
     aquiler_depth numeric,
