@@ -1,7 +1,7 @@
 -- TABLE: pipe_casing
 CREATE TABLE IF NOT EXISTS watersystem.pipe_casing (
     object_id serial,
-    asset_id varchar(64) DEFAULT 'Pipe Casing',
+    asset_id varchar(64) GENERATED ALWAYS AS ('WS-PIPE-CASING-' || LPAD(object_id::text, 5, '0')) STORED,
     diameter smallint DEFAULT 0,
     fill_type smallint DEFAULT 0,
     measured_length numeric(8, 2),

@@ -1,7 +1,7 @@
 -- TABLE: pressure_valve
 CREATE TABLE IF NOT EXISTS watersystem.pressure_valve (
     object_id serial,
-    asset_id varchar(64) DEFAULT 'Pressure Valve',
+    asset_id varchar(64) GENERATED ALWAYS AS ('WS-PRESSURE-VALVE-' || LPAD(object_id::text, 5, '0')) STORED,
     diameter smallint DEFAULT 0,
     pressure numeric,
     manufacturer smallint,

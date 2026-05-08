@@ -1,7 +1,7 @@
 -- TABLE: pump
 CREATE TABLE IF NOT EXISTS watersystem.pump (
     object_id serial,
-    asset_id varchar(64) DEFAULT 'Pump',
+    asset_id varchar(64) GENERATED ALWAYS AS ('WS-PUMP-' || LPAD(object_id::text, 5, '0')) STORED,
     inlet_diameter smallint DEFAULT 0,
     outlet_diameter smallint DEFAULT 0,
     rated_pressure numeric,

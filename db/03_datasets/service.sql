@@ -1,7 +1,7 @@
 -- TABLE: service
 CREATE TABLE IF NOT EXISTS watersystem.service (
     object_id serial,
-    asset_id varchar(64) DEFAULT 'Service',
+    asset_id varchar(64) GENERATED ALWAYS AS ('WS-SERVICE-LINE-' || LPAD(object_id::text, 5, '0')) STORED,
     diameter smallint DEFAULT 0,
     material smallint DEFAULT 0,
     water_type smallint DEFAULT 1,

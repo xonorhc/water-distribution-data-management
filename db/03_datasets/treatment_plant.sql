@@ -1,7 +1,7 @@
 -- TABLE: treatment_plant
 CREATE TABLE IF NOT EXISTS watersystem.treatment_plant (
     object_id serial,
-    asset_id varchar(64) DEFAULT 'Treatment Plant',
+    asset_id varchar(64) GENERATED ALWAYS AS ('WS-TREATMENT-PLANT-' || LPAD(object_id::text, 5, '0')) STORED,
     permitted_capacity numeric,
     rated_capacity numeric,
     average_daily_flow numeric,

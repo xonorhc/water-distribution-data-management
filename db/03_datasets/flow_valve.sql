@@ -1,7 +1,7 @@
 -- TABLE: flow_valve
 CREATE TABLE IF NOT EXISTS watersystem.flow_valve (
     object_id serial,
-    asset_id varchar(64) DEFAULT 'Flow Valve',
+    asset_id varchar(64) GENERATED ALWAYS AS ('WS-FLOW-VALVE-' || LPAD(object_id::text, 5, '0')) STORED,
     diameter smallint DEFAULT 0,
     manufacturer smallint,
     design_model bigint,

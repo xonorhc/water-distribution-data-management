@@ -1,7 +1,7 @@
 -- TABLE: storage
 CREATE TABLE IF NOT EXISTS watersystem.storage (
     object_id serial,
-    asset_id varchar(64) DEFAULT 'Storage',
+    asset_id varchar(64) GENERATED ALWAYS AS ('WS-STORAGE-' || LPAD(object_id::text, 5, '0')) STORED,
     height numeric,
     width numeric,
     volume numeric,

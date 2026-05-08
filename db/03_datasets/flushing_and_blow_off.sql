@@ -1,7 +1,7 @@
 -- TABLE: flushing_and_blow_off
 CREATE TABLE IF NOT EXISTS watersystem.flushing_and_blow_off (
     object_id serial,
-    asset_id varchar(64) DEFAULT 'Flushing and Blow Off',
+    asset_id varchar(64) GENERATED ALWAYS AS ('WS-BLOW-OFF-' || LPAD(object_id::text, 5, '0')) STORED,
     manufacturer smallint,
     design_model bigint,
     last_maint date,

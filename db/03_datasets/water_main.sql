@@ -1,7 +1,7 @@
 -- TABLE: water_main
 CREATE TABLE IF NOT EXISTS watersystem.water_main (
     object_id serial,
-    asset_id varchar(64) DEFAULT 'Water Main',
+    asset_id varchar(64) GENERATED ALWAYS AS ('WS-WATER-MAIN-' || LPAD(object_id::text, 5, '0')) STORED,
     material smallint DEFAULT 0,
     diameter smallint DEFAULT 0,
     water_type smallint DEFAULT 1,
