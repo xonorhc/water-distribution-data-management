@@ -12,6 +12,37 @@ INHERITS (
     watersystem.punctual_asset
 );
 
--- PostGIS index
+-- INDEX:
+CREATE INDEX ON watersystem.fitting (object_id);
+CREATE INDEX ON watersystem.fitting (created_date);
+CREATE INDEX ON watersystem.fitting (created_user);
+CREATE INDEX ON watersystem.fitting (last_edited_date);
+CREATE INDEX ON watersystem.fitting (last_edited_user);
 CREATE INDEX ON watersystem.fitting USING gist (shape);
 
+-- COMMENT:
+COMMENT ON COLUMN watersystem.fitting.global_id IS 'Globally unique identifier fo the feature';
+COMMENT ON COLUMN watersystem.fitting.object_id IS 'Unique identifier for each feature in the layer';
+COMMENT ON COLUMN watersystem.fitting.asset_id IS 'Identifier assigned to the asset for tracking purposes';
+COMMENT ON COLUMN watersystem.fitting.asset_type IS 'Categorization of the type of asset represented by the feature';
+COMMENT ON COLUMN watersystem.fitting.nickname IS 'Name or label assigned to the asset';
+COMMENT ON COLUMN watersystem.fitting.lifecycle_status IS 'Current stage or condition of the asset in its lifecycle';
+COMMENT ON COLUMN watersystem.fitting.install_date IS 'Date when the asset was installed';
+COMMENT ON COLUMN watersystem.fitting.inservice_date IS 'Date when the asset was put into active service';
+COMMENT ON COLUMN watersystem.fitting.retired_date IS 'Date when the asset was retired';
+COMMENT ON COLUMN watersystem.fitting.owned_by IS 'Entity or organization that owns the asset';
+COMMENT ON COLUMN watersystem.fitting.main_by IS 'Entity or organization responsible for maintaining the asset';
+COMMENT ON COLUMN watersystem.fitting.notes IS 'Additional information or comments about the asset';
+COMMENT ON COLUMN watersystem.fitting.spatial_source IS 'Describe the source of spatial data for the assets location';
+COMMENT ON COLUMN watersystem.fitting.spatial_confidence IS 'Level of confidence in the accuracy of the spatial data';
+COMMENT ON COLUMN watersystem.fitting.latitude IS 'Latitude coordinate of the asset';
+COMMENT ON COLUMN watersystem.fitting.longitude IS 'Longitude coordinate of the asset';
+COMMENT ON COLUMN watersystem.fitting.altitude IS 'Altitude of the assets location above sea level';
+COMMENT ON COLUMN watersystem.fitting.created_user IS 'User who created the feature';
+COMMENT ON COLUMN watersystem.fitting.created_date IS 'Date and time when the feature was created';
+COMMENT ON COLUMN watersystem.fitting.last_edited_user IS 'Tracks the user who last edited the record';
+COMMENT ON COLUMN watersystem.fitting.last_edited_date IS 'Date and time of the most recent modification to the record';
+COMMENT ON COLUMN watersystem.fitting.shape IS 'Geometric representation of the feature';
+COMMENT ON COLUMN watersystem.fitting.symbol_rotation IS 'Defines the rotation angle for the assets symbol on the map';
+COMMENT ON COLUMN watersystem.fitting.diameter IS 'Measurement of the fittings diameter';
+COMMENT ON COLUMN watersystem.fitting.secondary_diameter IS 'Measurement of the nozzle diameter of the fire hydrnat';
